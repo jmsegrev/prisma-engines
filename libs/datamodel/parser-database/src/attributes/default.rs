@@ -20,14 +20,10 @@ pub(super) fn visit_model_field_default(
     let ast_model = &ctx.ast[model_id];
     let ast_field = &ast_model[field_id];
 
-    if ast_field.arity.is_list() {
-        return ctx.push_attribute_validation_error("Cannot set a default value on list field.");
-    }
-
     let mapped_name = default_attribute_mapped_name(ctx);
     let default_attribute_id = ctx.current_attribute_id();
 
-    let mut accept = || {
+    let accept = || {
         let default_value = DefaultAttribute {
             argument_idx,
             mapped_name,
@@ -47,19 +43,11 @@ pub(super) fn visit_model_field_default(
                 validate_default_value_on_composite_type(ctid, ast_field, ctx);
             }
             ScalarFieldType::Enum(enum_id) => {
-                match value.value {
-                    ast::Expression::ConstantValue(enum_value, _) => {
-                        if ctx.ast[enum_id].values.iter().any(|v| v.name() == enum_value) {
-                            accept()
-                        } else {
-                            validate_invalid_default_enum_value(enum_value, ctx);
-                        }
-                    }
-                    ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
-                        validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
-                    }
-                    bad_value => validate_invalid_default_enum_expr(bad_value, ctx),
-                };
+                if ast_field.arity.is_list() {
+                    validate_enum_list_default(value.value, enum_id, accept, ctx);
+                } else {
+                    validate_enum_default(value.value, enum_id, accept, ctx);
+                }
             }
             ScalarFieldType::BuiltInScalar(scalar_type) => validate_model_builtin_scalar_type_default(
                 scalar_type,
@@ -101,17 +89,13 @@ pub(super) fn visit_composite_field_default(
     let ast_model = &ctx.ast[ct_id];
     let ast_field = &ast_model[field_id];
 
-    if ast_field.arity.is_list() {
-        return ctx.push_attribute_validation_error("Cannot set a default value on list field.");
-    }
-
     if ctx.visit_optional_arg("map").is_some() {
         ctx.push_attribute_validation_error("The `map` argument is not allowed on a composite type field.");
     }
 
     let default_attribute = ctx.current_attribute_id();
 
-    let mut accept = || {
+    let accept = || {
         let default_value = DefaultAttribute {
             argument_idx,
             mapped_name: None,
@@ -128,19 +112,14 @@ pub(super) fn visit_composite_field_default(
             validate_default_value_on_composite_type(ctid, ast_field, ctx);
         }
         ScalarFieldType::Enum(enum_id) => {
-            match value.value {
-                ast::Expression::ConstantValue(enum_value, _) => {
-                    if ctx.ast[enum_id].values.iter().any(|v| v.name() == enum_value) {
-                        accept()
-                    } else {
-                        validate_invalid_default_enum_value(enum_value, ctx);
-                    }
-                }
-                bad_value => validate_invalid_default_enum_expr(bad_value, ctx),
-            };
+            if ast_field.arity.is_list() {
+                validate_enum_list_default(value.value, enum_id, accept, ctx);
+            } else {
+                validate_enum_default(value.value, enum_id, accept, ctx);
+            }
         }
         ScalarFieldType::BuiltInScalar(scalar_type) => {
-            validate_composite_builtin_scalar_type_default(scalar_type, value.value, accept, ctx)
+            validate_composite_builtin_scalar_type_default(scalar_type, value.value, accept, ast_field.arity, ctx)
         }
         ScalarFieldType::Unsupported(_) => {
             ctx.push_attribute_validation_error("Composite field of type `Unsupported` cannot have default values.")
@@ -149,12 +128,10 @@ pub(super) fn visit_composite_field_default(
     }
 }
 
-fn validate_model_builtin_scalar_type_default(
+fn validate_scalar_default_literal(
     scalar_type: ScalarType,
     value: &ast::Expression,
-    mapped_name: Option<StringId>,
     mut accept: impl FnMut(),
-    field_id: (ast::ModelId, ast::FieldId),
     ctx: &mut Context<'_>,
 ) {
     match (scalar_type, value) {
@@ -171,6 +148,27 @@ fn validate_model_builtin_scalar_type_default(
             validate_default_bool_value(val, *span, accept, ctx)
         }
 
+        (_, ast::Expression::Array(..)) => {
+            ctx.push_attribute_validation_error("The default value of a non-list field cannot be a list.")
+        }
+
+        // Invalid scalar default.
+        (scalar_type, value) => {
+            validate_invalid_scalar_default(scalar_type, value, ctx);
+        }
+    }
+}
+
+fn validate_model_builtin_scalar_type_default(
+    scalar_type: ScalarType,
+    value: &ast::Expression,
+    mapped_name: Option<StringId>,
+    mut accept: impl FnMut(),
+    field_id: (ast::ModelId, ast::FieldId),
+    ctx: &mut Context<'_>,
+) {
+    let arity = ctx.ast[field_id.0][field_id.1].arity;
+    match (scalar_type, value) {
         // Functions
         (_, ast::Expression::Function(funcname, _, _)) if funcname == FN_AUTOINCREMENT && mapped_name.is_some() => {
             ctx.push_attribute_validation_error("Naming an autoincrement default value is not allowed.")
@@ -208,9 +206,13 @@ fn validate_model_builtin_scalar_type_default(
             validate_invalid_function_default(funcname, scalar_type, ctx);
         }
 
-        // Invalid scalar default.
+        // Scalar default literal
+        (scalar_type, value) if arity.is_list() => {
+            validate_builtin_scalar_list_default(scalar_type, value, accept, ctx);
+        }
+
         (scalar_type, value) => {
-            validate_invalid_scalar_default(scalar_type, value, ctx);
+            validate_scalar_default_literal(scalar_type, value, accept, ctx);
         }
     }
 }
@@ -218,23 +220,11 @@ fn validate_model_builtin_scalar_type_default(
 fn validate_composite_builtin_scalar_type_default(
     scalar_type: ScalarType,
     value: &ast::Expression,
-    mut accept: impl FnMut(),
+    accept: impl FnMut(),
+    field_arity: ast::FieldArity,
     ctx: &mut Context<'_>,
 ) {
     match (scalar_type, value) {
-        (ScalarType::String, ast::Expression::StringValue(_, _))
-        | (ScalarType::Json, ast::Expression::StringValue(_, _))
-        | (ScalarType::Bytes, ast::Expression::StringValue(_, _))
-        | (ScalarType::Int, ast::Expression::NumericValue(_, _))
-        | (ScalarType::BigInt, ast::Expression::NumericValue(_, _))
-        | (ScalarType::Float, ast::Expression::NumericValue(_, _))
-        | (ScalarType::DateTime, ast::Expression::StringValue(_, _))
-        | (ScalarType::Decimal, ast::Expression::NumericValue(_, _))
-        | (ScalarType::Decimal, ast::Expression::StringValue(_, _)) => accept(),
-
-        (ScalarType::Boolean, ast::Expression::ConstantValue(val, span)) => {
-            validate_default_bool_value(val, *span, accept, ctx)
-        }
         // Functions
         (ScalarType::String, ast::Expression::Function(funcname, funcargs, _))
             if funcname == FN_UUID || funcname == FN_CUID =>
@@ -258,9 +248,14 @@ fn validate_composite_builtin_scalar_type_default(
         (scalar_type, ast::Expression::Function(funcname, _, _)) => {
             validate_invalid_function_default(funcname, scalar_type, ctx);
         }
-        // Invalid scalar default.
+
+        // Literal default
+        (scalar_type, value) if field_arity.is_list() => {
+            validate_builtin_scalar_list_default(scalar_type, value, accept, ctx);
+        }
+
         (scalar_type, value) => {
-            validate_invalid_scalar_default(scalar_type, value, ctx);
+            validate_scalar_default_literal(scalar_type, value, accept, ctx);
         }
     }
 }
@@ -345,7 +340,6 @@ fn validate_empty_function_args(
 
     ctx.push_attribute_validation_error(&format!(
         "The `{fn_name}` function does not take any argument. Consider changing this default to `{fn_name}()`.",
-        fn_name = fn_name
     ));
 }
 
@@ -375,6 +369,93 @@ fn validate_dbgenerated_args(args: &[ast::Argument], mut accept: impl FnMut(), c
         }
         None | Some(ast::Expression::StringValue(_, _)) => accept(),
         _ => bail(),
+    }
+}
+
+fn validate_enum_default(
+    found_value: &ast::Expression,
+    enum_id: ast::EnumId,
+    mut accept: impl FnMut(),
+    ctx: &mut Context<'_>,
+) {
+    match found_value {
+        ast::Expression::ConstantValue(enum_value, _) => {
+            if ctx.ast[enum_id].values.iter().any(|v| v.name() == enum_value) {
+                accept()
+            } else {
+                validate_invalid_default_enum_value(enum_value, ctx);
+            }
+        }
+        ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
+            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
+        }
+        bad_value => validate_invalid_default_enum_expr(bad_value, ctx),
+    };
+}
+
+fn validate_enum_list_default(
+    found_value: &ast::Expression,
+    enum_id: ast::EnumId,
+    mut accept: impl FnMut(),
+    ctx: &mut Context<'_>,
+) {
+    match found_value {
+        ast::Expression::Array(values, _) => {
+            let mut valid = true;
+            let mut enum_values = values.into_iter();
+            while let (true, Some(enum_value)) = (valid, enum_values.next()) {
+                valid = false;
+                validate_enum_default(
+                    enum_value,
+                    enum_id,
+                    || {
+                        valid = true;
+                    },
+                    ctx,
+                );
+            }
+
+            if valid {
+                accept();
+            }
+        }
+        ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
+            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
+        }
+        bad_value => validate_invalid_default_enum_expr(bad_value, ctx),
+    };
+}
+
+fn validate_builtin_scalar_list_default(
+    scalar_type: ScalarType,
+    found_value: &ast::Expression,
+    mut accept: impl FnMut(),
+    ctx: &mut Context<'_>,
+) {
+    match found_value {
+        ast::Expression::Array(values, _) => {
+            let mut valid = true;
+            let mut values = values.into_iter();
+            while let (true, Some(value)) = (valid, values.next()) {
+                valid = false;
+                validate_scalar_default_literal(
+                    scalar_type,
+                    value,
+                    || {
+                        valid = true;
+                    },
+                    ctx,
+                );
+            }
+
+            if valid {
+                accept()
+            }
+        }
+        ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
+            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
+        }
+        _bad_value => ctx.push_attribute_validation_error("The default value of a list field must be a list."),
     }
 }
 

@@ -28,7 +28,7 @@ fn must_error_if_default_value_for_relation_field() {
 }
 
 #[test]
-fn must_error_if_default_value_for_list() {
+fn must_error_on_list_default_value_for_singular() {
     let dml = indoc! {r#"
         datasource db {
           provider = "postgres"
@@ -37,22 +37,69 @@ fn must_error_if_default_value_for_list() {
 
         model Model {
           id Int @id
-          rel String[] @default(["hello"])
+          rel String @default(["hello"])
         }
     "#};
 
-    let error = datamodel::parse_schema(dml).map(drop).unwrap_err();
-
     let expectation = expect![[r#"
-        [1;91merror[0m: [1mError parsing attribute "@default": Cannot set a default value on list field.[0m
+        [1;91merror[0m: [1mError parsing attribute "@default": The default value of a non-list field cannot be a list.[0m
           [1;94m-->[0m  [4mschema.prisma:8[0m
         [1;94m   | [0m
         [1;94m 7 | [0m  id Int @id
-        [1;94m 8 | [0m  rel String[] @[1;91mdefault(["hello"])[0m
+        [1;94m 8 | [0m  rel String @[1;91mdefault(["hello"])[0m
         [1;94m   | [0m
     "#]];
+    expect_error(dml, &expectation);
+}
 
-    expectation.assert_eq(&error)
+#[test]
+fn must_error_on_singular_default_value_for_list() {
+    let dml = indoc! {r#"
+        datasource db {
+          provider = "postgres"
+          url = "postgres://"
+        }
+
+        model Model {
+          id Int @id
+          rel String[] @default("hello")
+        }
+    "#};
+
+    let expectation = expect![[r#"
+        [1;91merror[0m: [1mError parsing attribute "@default": The default value of a list field must be a list.[0m
+          [1;94m-->[0m  [4mschema.prisma:8[0m
+        [1;94m   | [0m
+        [1;94m 7 | [0m  id Int @id
+        [1;94m 8 | [0m  rel String[] @[1;91mdefault("hello")[0m
+        [1;94m   | [0m
+    "#]];
+    expect_error(dml, &expectation);
+}
+
+#[test]
+fn must_error_on_bad_value_inside_list_default() {
+    let dml = indoc! {r#"
+        datasource db {
+          provider = "postgres"
+          url = "postgres://"
+        }
+
+        model Model {
+          id Int @id
+          rel String[] @default(["hello", 101, "dalmatians"])
+        }
+    "#};
+
+    let expectation = expect![[r#"
+        [1;91merror[0m: [1mError parsing attribute "@default": Expected a String value, but found `101`.[0m
+          [1;94m-->[0m  [4mschema.prisma:8[0m
+        [1;94m   | [0m
+        [1;94m 7 | [0m  id Int @id
+        [1;94m 8 | [0m  rel String[] @[1;91mdefault(["hello", 101, "dalmatians"])[0m
+        [1;94m   | [0m
+    "#]];
+    expect_error(dml, &expectation);
 }
 
 #[test]
