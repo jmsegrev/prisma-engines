@@ -33,6 +33,15 @@ pub(super) fn visit_model_field_default(
         field_data.default = Some(default_value);
     };
 
+    // @default(dbgenerated(...)) is always valid.
+    match value.value {
+        ast::Expression::Function(name, funcargs, _span) if name == FN_DBGENERATED => {
+            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
+            return;
+        }
+        _ => (),
+    }
+
     // Resolve the default to a DefaultValue. We must loop in order to
     // resolve type aliases.
     let mut r#type = field_data.r#type;
@@ -61,13 +70,11 @@ pub(super) fn visit_model_field_default(
                 r#type = ctx.types.type_aliases[&alias_id];
                 continue;
             }
-            ScalarFieldType::Unsupported(_) => match value.value {
-                ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
-                    validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
-                }
-                _ => ctx
-                    .push_attribute_validation_error("Only @default(dbgenerated()) can be used for Unsupported types."),
-            },
+            ScalarFieldType::Unsupported(_) => {
+                ctx.push_attribute_validation_error(
+                    "Only @default(dbgenerated(\"...\")) can be used for Unsupported types.",
+                );
+            }
         }
 
         break;
@@ -104,6 +111,15 @@ pub(super) fn visit_composite_field_default(
 
         field_data.default = Some(default_value);
     };
+
+    // @default(dbgenerated(...)) is never valid on a composite type's fields.
+    match value.value {
+        ast::Expression::Function(name, ..) if name == FN_DBGENERATED => {
+            ctx.push_attribute_validation_error("Fields of composite types cannot have dbgenerated() defaults.");
+            return;
+        }
+        _ => (),
+    }
 
     // Resolve the default to a DefaultValue. We must loop in order to
     // resolve type aliases.
@@ -192,10 +208,6 @@ fn validate_model_builtin_scalar_type_default(
             validate_auto_args(&funcargs.arguments, accept, ctx)
         }
 
-        (_, ast::Expression::Function(funcname, funcargs, _)) if funcname == FN_DBGENERATED => {
-            validate_dbgenerated_args(&funcargs.arguments, accept, ctx)
-        }
-
         (_, ast::Expression::Function(funcname, _, _)) if !KNOWN_FUNCTIONS.contains(&funcname.as_str()) => {
             ctx.types.unknown_function_defaults.push(field_id);
             accept();
@@ -234,9 +246,7 @@ fn validate_composite_builtin_scalar_type_default(
         (ScalarType::DateTime, ast::Expression::Function(funcname, funcargs, _)) if funcname == FN_NOW => {
             validate_empty_function_args(FN_NOW, &funcargs.arguments, accept, ctx)
         }
-        (_, ast::Expression::Function(funcname, _, _))
-            if funcname == FN_DBGENERATED || funcname == FN_AUTOINCREMENT || funcname == FN_AUTO =>
-        {
+        (_, ast::Expression::Function(funcname, _, _)) if funcname == FN_AUTOINCREMENT || funcname == FN_AUTO => {
             ctx.push_attribute_validation_error(&format!(
                 "The function `{funcname}()` is not supported on composite fields.",
             ));
@@ -386,9 +396,6 @@ fn validate_enum_default(
                 validate_invalid_default_enum_value(enum_value, ctx);
             }
         }
-        ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
-            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
-        }
         bad_value => validate_invalid_default_enum_expr(bad_value, ctx),
     };
 }
@@ -402,7 +409,7 @@ fn validate_enum_list_default(
     match found_value {
         ast::Expression::Array(values, _) => {
             let mut valid = true;
-            let mut enum_values = values.into_iter();
+            let mut enum_values = values.iter();
             while let (true, Some(enum_value)) = (valid, enum_values.next()) {
                 valid = false;
                 validate_enum_default(
@@ -419,9 +426,6 @@ fn validate_enum_list_default(
                 accept();
             }
         }
-        ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
-            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
-        }
         bad_value => validate_invalid_default_enum_expr(bad_value, ctx),
     };
 }
@@ -435,7 +439,7 @@ fn validate_builtin_scalar_list_default(
     match found_value {
         ast::Expression::Array(values, _) => {
             let mut valid = true;
-            let mut values = values.into_iter();
+            let mut values = values.iter();
             while let (true, Some(value)) = (valid, values.next()) {
                 valid = false;
                 validate_scalar_default_literal(
@@ -451,9 +455,6 @@ fn validate_builtin_scalar_list_default(
             if valid {
                 accept()
             }
-        }
-        ast::Expression::Function(funcname, funcargs, _) if funcname == FN_DBGENERATED => {
-            validate_dbgenerated_args(&funcargs.arguments, accept, ctx);
         }
         _bad_value => ctx.push_attribute_validation_error("The default value of a list field must be a list."),
     }

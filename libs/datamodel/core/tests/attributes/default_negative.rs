@@ -373,7 +373,7 @@ fn must_error_if_scalar_default_on_unsupported() {
     let error = datamodel::parse_schema(dml).map(drop).unwrap_err();
 
     let expectation = expect![[r#"
-        [1;91merror[0m: [1mError parsing attribute "@default": Only @default(dbgenerated()) can be used for Unsupported types.[0m
+        [1;91merror[0m: [1mError parsing attribute "@default": Only @default(dbgenerated("...")) can be used for Unsupported types.[0m
           [1;94m-->[0m  [4mschema.prisma:8[0m
         [1;94m   | [0m
         [1;94m 7 | [0m  id      Int @id

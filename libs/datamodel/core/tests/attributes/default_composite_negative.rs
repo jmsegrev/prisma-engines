@@ -330,7 +330,7 @@ fn must_error_on_dbgenerated_default() {
     let error = datamodel::parse_schema(schema).map(drop).unwrap_err();
 
     let expected = expect![[r#"
-        [1;91merror[0m: [1mError parsing attribute "@default": The function `dbgenerated()` is not supported on composite fields.[0m
+        [1;91merror[0m: [1mError parsing attribute "@default": Fields of composite types cannot have dbgenerated() defaults.[0m
           [1;94m-->[0m  [4mschema.prisma:3[0m
         [1;94m   | [0m
         [1;94m 2 | [0m        type User {
