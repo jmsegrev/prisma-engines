@@ -384,4 +384,3 @@ async fn introspecting_json_defaults_on_cockroach(api: &TestApi) -> TestResult {
 
     Ok(())
 }
-

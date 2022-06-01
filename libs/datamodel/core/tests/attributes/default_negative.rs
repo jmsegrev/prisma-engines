@@ -88,6 +88,7 @@ fn must_error_on_bad_value_inside_list_default() {
         model Model {
           id Int @id
           rel String[] @default(["hello", 101, "dalmatians"])
+          dateTime DateTime[] @default(["2019-06-17T14:20:57Z", "2020-09-*1T20:00:00+02:00"])
         }
     "#};
 
@@ -1103,4 +1104,9 @@ fn boolean_defaults_must_be_true_or_false() {
     "#]];
 
     expected.assert_eq(&error)
+}
+
+#[test]
+fn nested_scalar_list_defaults_are_disallowed() {
+    todo!();
 }
