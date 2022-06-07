@@ -1092,8 +1092,6 @@ fn boolean_defaults_must_be_true_or_false() {
         }
     "#;
 
-    let error = datamodel::parse_schema(schema).map(drop).unwrap_err();
-
     let expected = expect![[r#"
         [1;91merror[0m: [1mError parsing attribute "@default": A boolean literal must be `true` or `false`.[0m
           [1;94m-->[0m  [4mschema.prisma:4[0m
@@ -1103,10 +1101,24 @@ fn boolean_defaults_must_be_true_or_false() {
         [1;94m   | [0m
     "#]];
 
-    expected.assert_eq(&error)
+    expect_error(schema, &expected);
 }
 
 #[test]
 fn nested_scalar_list_defaults_are_disallowed() {
-    todo!();
+    let schema = r#"
+        datasource db {
+            provider = "postgresql"
+            url = env("DBURL")
+        }
+
+        model Pizza {
+            id Int @id
+            toppings String[] @default(["reblochon cheese", ["potato", "with", "rosmarin"], "onions"])
+        }
+    "#;
+
+    let expected = expect![[]];
+
+    expect_error(schema, &expected);
 }

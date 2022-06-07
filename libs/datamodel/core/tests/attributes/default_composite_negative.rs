@@ -470,3 +470,21 @@ fn boolean_defaults_must_be_true_or_false() {
 
     expected.assert_eq(&error)
 }
+
+#[test]
+fn nested_scalar_list_defaults_are_disallowed() {
+    let schema = r#"
+        datasource db {
+            provider = "mongodb"
+            url = env("DBURL")
+        }
+
+        type Pizza {
+            toppings String[] @default(["reblochon cheese", ["potato", "with", "rosmarin"], "onions"])
+        }
+    "#;
+
+    let expected = expect![[]];
+
+    expect_error(schema, &expected);
+}
