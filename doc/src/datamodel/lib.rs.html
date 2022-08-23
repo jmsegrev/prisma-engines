@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/core/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../datamodel/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/core/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../datamodel/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../datamodel/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../datamodel/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../datamodel/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -208,161 +209,20 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
-<span id="290">290</span>
-<span id="291">291</span>
-<span id="292">292</span>
-<span id="293">293</span>
-<span id="294">294</span>
-<span id="295">295</span>
-<span id="296">296</span>
-<span id="297">297</span>
-<span id="298">298</span>
-<span id="299">299</span>
-<span id="300">300</span>
-<span id="301">301</span>
-</pre><pre class="rust"><code><span class="doccomment">//! This crate is responsible for parsing, rendering and formatting a Prisma Schema.</span>
-<span class="doccomment">//! A Prisma Schema consists out of two parts:</span>
-<span class="doccomment">//! 1. The `Datamodel` part refers to the model and enum definitions.</span>
-<span class="doccomment">//! 2. The `Configuration` part refers to the generator and datasource definitions.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The data structures are organized into 3 layers:</span>
-<span class="doccomment">//! * The AST layer contains the data data structures representing the schema input.</span>
-<span class="doccomment">//! * The model layer contains the data structures that are semantically rich and therefore engines can build upon.</span>
-<span class="doccomment">//! * The JSON layer contains the data structures that represent the contract for the DMMF which is the API for client generators.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The responsibilities of each top level module is as following:</span>
-<span class="doccomment">//! * `common`: contains constants and generic helpers</span>
-<span class="doccomment">//! * `error`: contains the error and result types</span>
-<span class="doccomment">//! * `ast`: contains the data structures for the AST of a Prisma schema. And the parsing functions to turn an input string into an AST.</span>
-<span class="doccomment">//! * `dml`: contains the models representing the Datamodel part of a Prisma schema</span>
-<span class="doccomment">//! * `configuration`: contains the models representing the Datasources and Generators of a Prisma schema</span>
-<span class="doccomment">//! * `transform`: contains the logic to turn an AST into models and vice versa</span>
-<span class="doccomment">//! * `mcf`: contains the logic to turn generators and datasources into their JSON representation</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The flow between the layers is depicted in the following diagram.</span>
-<span class="doccomment">//!&lt;pre&gt;</span>
-<span class="doccomment">//!                ┌──────────────────┐</span>
-<span class="doccomment">//!                │       json       │</span>
-<span class="doccomment">//!                └────────▲─────────┘</span>
-<span class="doccomment">//!                         │</span>
-<span class="doccomment">//!                         │</span>
-<span class="doccomment">//!      ┌──────────────────┐┌──────────────────┐</span>
-<span class="doccomment">//!      │       dml        ││  configuration   │</span>
-<span class="doccomment">//!      └──────────────────┘└──────────────────┘</span>
-<span class="doccomment">//!                        │  ▲</span>
-<span class="doccomment">//!┌─────────────────────┐ │  │ ┌─────────────────────┐</span>
-<span class="doccomment">//!│transform::dml_to_ast│ │  │ │transform::ast_to_dml│</span>
-<span class="doccomment">//!└─────────────────────┘ │  │ └─────────────────────┘</span>
-<span class="doccomment">//!                        │  │</span>
-<span class="doccomment">//!                        ▼  │</span>
-<span class="doccomment">//!                ┌──────────────────┐</span>
-<span class="doccomment">//!                │       ast        │</span>
-<span class="doccomment">//!                └──────────────────┘</span>
-<span class="doccomment">//!                        │  ▲</span>
-<span class="doccomment">//!                        │  │</span>
-<span class="doccomment">//!                        │  │</span>
-<span class="doccomment">//!                        ▼  │</span>
-<span class="doccomment">//!                 ┌──────────────────┐</span>
-<span class="doccomment">//!                 │  schema string   │</span>
-<span class="doccomment">//!                 └──────────────────┘</span>
-<span class="doccomment">//!&lt;/pre&gt;</span>
-<span class="doccomment">//!</span>
-
+</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">doc</span> <span class="op">=</span> <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">rust_2018_idioms</span>, <span class="ident">unsafe_code</span>)]</span>
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">common</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">dml</span>;
 
-<span class="doccomment">/// `mcf`: Turns a collection of `configuration::Datasource` and `configuration::Generator` into a JSON representation.</span>
+<span class="doccomment">/// `mcf`: Turns a collection of `configuration::Datasource` and `configuration::Generator` into a</span>
+<span class="doccomment">/// JSON representation. This is the `get_config()` representation.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mcf</span>;
 
 <span class="kw">mod</span> <span class="ident">configuration</span>;
+<span class="kw">mod</span> <span class="ident">lift</span>;
 <span class="kw">mod</span> <span class="ident">reformat</span>;
-<span class="kw">mod</span> <span class="ident">transform</span>;
+<span class="kw">mod</span> <span class="ident">render</span>;
+<span class="kw">mod</span> <span class="ident">validate</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">configuration</span>::{<span class="ident">Configuration</span>, <span class="ident">Datasource</span>, <span class="ident">Generator</span>, <span class="ident">StringFromEnvVar</span>},
@@ -370,18 +230,20 @@
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">datamodel_connector</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">diagnostics</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parser_database</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parser_database::is_reserved_type_name</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">schema_ast</span>::{<span class="self">self</span>, <span class="ident">ast</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">dml</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parser_database</span>::{<span class="self">self</span>, <span class="ident">is_reserved_type_name</span>};
 
+<span class="kw">use</span> <span class="ident"><span class="self">self</span>::validate</span>::{<span class="ident">validate</span>, <span class="ident">DatasourceLoader</span>, <span class="ident">GeneratorLoader</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::common::preview_features::PreviewFeature</span>;
 <span class="kw">use</span> <span class="ident">diagnostics::Diagnostics</span>;
 <span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
-<span class="kw">use</span> <span class="ident">parser_database::ParserDatabase</span>;
-<span class="kw">use</span> <span class="ident">transform</span>::{
-    <span class="ident">ast_to_dml</span>::{<span class="ident">validate</span>, <span class="ident">DatasourceLoader</span>, <span class="ident">GeneratorLoader</span>},
-    <span class="ident">dml_to_ast</span>::{<span class="self">self</span>, <span class="ident">GeneratorSerializer</span>, <span class="ident">LowerDmlToAst</span>},
-};
+<span class="kw">use</span> <span class="ident">parser_database</span>::{<span class="ident">ast</span>, <span class="ident">ParserDatabase</span>, <span class="ident">SourceFile</span>};
+<span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
+
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">builtin_connectors</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mongodb_datamodel_connector</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sql_datamodel_connector</span>::<span class="kw-2">*</span>;
+}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Validated</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -411,27 +273,24 @@
     }
 }
 
-<span class="doccomment">/// Parse and validate the whole schema.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_schema_parserdb</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidatedSchema</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_schema_parserdb</span>(<span class="ident">file</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SourceFile</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidatedSchema</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">into</span>();
+
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">diagnostics</span> <span class="op">=</span> <span class="ident">Diagnostics::new</span>();
+    <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="ident">ParserDatabase::new</span>(<span class="ident">file</span>.<span class="ident">clone</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+
     <span class="ident">diagnostics</span>
         .<span class="ident">to_result</span>()
-        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">err</span>.<span class="ident">to_pretty_string</span>(<span class="string">&quot;schema.prisma&quot;</span>, <span class="ident">src</span>))<span class="question-mark">?</span>;
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">err</span>.<span class="ident">to_pretty_string</span>(<span class="string">&quot;schema.prisma&quot;</span>, <span class="ident">file</span>.<span class="ident">as_str</span>()))<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="ident">ast</span> <span class="op">=</span> <span class="ident">schema_ast::parser::parse_schema</span>(<span class="ident">src</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
-    <span class="kw">let</span> <span class="ident">generators</span> <span class="op">=</span> <span class="ident">GeneratorLoader::load_generators_from_ast</span>(<span class="kw-2">&amp;</span><span class="ident">ast</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">generators</span> <span class="op">=</span> <span class="ident">GeneratorLoader::load_generators_from_ast</span>(<span class="ident">db</span>.<span class="ident">ast</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
     <span class="kw">let</span> <span class="ident">preview_features</span> <span class="op">=</span> <span class="ident">preview_features</span>(<span class="kw-2">&amp;</span><span class="ident">generators</span>);
-    <span class="kw">let</span> <span class="ident">datasources</span> <span class="op">=</span> <span class="ident">load_sources</span>(<span class="kw-2">&amp;</span><span class="ident">ast</span>, <span class="ident">preview_features</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">datasources</span> <span class="op">=</span> <span class="ident">load_sources</span>(<span class="ident">db</span>.<span class="ident">ast</span>(), <span class="ident">preview_features</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
 
-    <span class="ident">diagnostics</span>
-        .<span class="ident">to_result</span>()
-        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">err</span>.<span class="ident">to_pretty_string</span>(<span class="string">&quot;schema.prisma&quot;</span>, <span class="ident">src</span>))<span class="question-mark">?</span>;
-
-    <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">validate</span>(<span class="ident">ast</span>, <span class="kw-2">&amp;</span><span class="ident">datasources</span>, <span class="ident">preview_features</span>, <span class="ident">diagnostics</span>);
-
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">validate</span>(<span class="ident">db</span>, <span class="kw-2">&amp;</span><span class="ident">datasources</span>, <span class="ident">preview_features</span>, <span class="ident">diagnostics</span>);
     <span class="ident">out</span>.<span class="ident">diagnostics</span>
         .<span class="ident">to_result</span>()
-        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">err</span>.<span class="ident">to_pretty_string</span>(<span class="string">&quot;schema.prisma&quot;</span>, <span class="ident">src</span>))<span class="question-mark">?</span>;
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">err</span>.<span class="ident">to_pretty_string</span>(<span class="string">&quot;schema.prisma&quot;</span>, <span class="ident">file</span>.<span class="ident">as_str</span>()))<span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(<span class="ident">ValidatedSchema</span> {
         <span class="ident">configuration</span>: <span class="ident">Configuration</span> {
@@ -454,22 +313,26 @@
 <span class="kw">fn</span> <span class="ident">parse_datamodel_internal</span>(
     <span class="ident">datamodel_string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
 ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Validated</span><span class="op">&lt;</span>(<span class="ident">Configuration</span>, <span class="ident">dml::Datamodel</span>)<span class="op">&gt;</span>, <span class="ident">diagnostics::Diagnostics</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">diagnostics</span> <span class="op">=</span> <span class="ident">diagnostics::Diagnostics::new</span>();
-    <span class="kw">let</span> <span class="ident">ast</span> <span class="op">=</span> <span class="ident">schema_ast::parser::parse_schema</span>(<span class="ident">datamodel_string</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">SourceFile::new_allocated</span>(<span class="ident">Arc::from</span>(<span class="ident">datamodel_string</span>.<span class="ident">to_owned</span>().<span class="ident">into_boxed_str</span>()));
 
-    <span class="kw">let</span> <span class="ident">generators</span> <span class="op">=</span> <span class="ident">GeneratorLoader::load_generators_from_ast</span>(<span class="kw-2">&amp;</span><span class="ident">ast</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
-    <span class="kw">let</span> <span class="ident">preview_features</span> <span class="op">=</span> <span class="ident">preview_features</span>(<span class="kw-2">&amp;</span><span class="ident">generators</span>);
-    <span class="kw">let</span> <span class="ident">datasources</span> <span class="op">=</span> <span class="ident">load_sources</span>(<span class="kw-2">&amp;</span><span class="ident">ast</span>, <span class="ident">preview_features</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">diagnostics</span> <span class="op">=</span> <span class="ident">diagnostics::Diagnostics::new</span>();
+    <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="ident">ParserDatabase::new</span>(<span class="ident">file</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
 
     <span class="ident">diagnostics</span>.<span class="ident">to_result</span>()<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">validate</span>(<span class="ident">ast</span>, <span class="kw-2">&amp;</span><span class="ident">datasources</span>, <span class="ident">preview_features</span>, <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">generators</span> <span class="op">=</span> <span class="ident">GeneratorLoader::load_generators_from_ast</span>(<span class="ident">db</span>.<span class="ident">ast</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">preview_features</span> <span class="op">=</span> <span class="ident">preview_features</span>(<span class="kw-2">&amp;</span><span class="ident">generators</span>);
+    <span class="kw">let</span> <span class="ident">datasources</span> <span class="op">=</span> <span class="ident">load_sources</span>(<span class="ident">db</span>.<span class="ident">ast</span>(), <span class="ident">preview_features</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+
+    <span class="ident">diagnostics</span>.<span class="ident">to_result</span>()<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">validate</span>(<span class="ident">db</span>, <span class="kw-2">&amp;</span><span class="ident">datasources</span>, <span class="ident">preview_features</span>, <span class="ident">diagnostics</span>);
 
     <span class="kw">if</span> <span class="op">!</span><span class="ident">out</span>.<span class="ident">diagnostics</span>.<span class="ident">errors</span>().<span class="ident">is_empty</span>() {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">out</span>.<span class="ident">diagnostics</span>);
     }
 
-    <span class="kw">let</span> <span class="ident">datamodel</span> <span class="op">=</span> <span class="ident">transform::ast_to_dml::LiftAstToDml::new</span>(<span class="kw-2">&amp;</span><span class="ident">out</span>.<span class="ident">db</span>, <span class="ident">out</span>.<span class="ident">connector</span>, <span class="ident">out</span>.<span class="ident">referential_integrity</span>).<span class="ident">lift</span>();
+    <span class="kw">let</span> <span class="ident">datamodel</span> <span class="op">=</span> <span class="ident">lift::LiftAstToDml::new</span>(<span class="kw-2">&amp;</span><span class="ident">out</span>.<span class="ident">db</span>, <span class="ident">out</span>.<span class="ident">connector</span>, <span class="ident">out</span>.<span class="ident">referential_integrity</span>).<span class="ident">lift</span>();
 
     <span class="prelude-val">Ok</span>(<span class="ident">Validated</span> {
         <span class="ident">subject</span>: (
@@ -479,13 +342,13 @@
             },
             <span class="ident">datamodel</span>,
         ),
-        <span class="ident">warnings</span>: <span class="ident">out</span>.<span class="ident">diagnostics</span>.<span class="ident">warnings</span>().<span class="ident">to_vec</span>(),
+        <span class="ident">warnings</span>: <span class="ident">out</span>.<span class="ident">diagnostics</span>.<span class="ident">into_warnings</span>(),
     })
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_schema_ast</span>(<span class="ident">datamodel_string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ast::SchemaAst</span>, <span class="ident">diagnostics::Diagnostics</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">diagnostics</span> <span class="op">=</span> <span class="ident">Diagnostics::default</span>();
-    <span class="kw">let</span> <span class="ident">schema</span> <span class="op">=</span> <span class="ident">schema_ast::parser::parse_schema</span>(<span class="ident">datamodel_string</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">schema</span> <span class="op">=</span> <span class="ident">schema_ast::parse_schema</span>(<span class="ident">datamodel_string</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
 
     <span class="ident">diagnostics</span>.<span class="ident">to_result</span>()<span class="question-mark">?</span>;
 
@@ -495,7 +358,7 @@
 <span class="doccomment">/// Loads all configuration blocks from a datamodel using the built-in source definitions.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_configuration</span>(<span class="ident">schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidatedConfiguration</span>, <span class="ident">diagnostics::Diagnostics</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">diagnostics</span> <span class="op">=</span> <span class="ident">Diagnostics::default</span>();
-    <span class="kw">let</span> <span class="ident">ast</span> <span class="op">=</span> <span class="ident">schema_ast::parser::parse_schema</span>(<span class="ident">schema</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
+    <span class="kw">let</span> <span class="ident">ast</span> <span class="op">=</span> <span class="ident">schema_ast::parse_schema</span>(<span class="ident">schema</span>, <span class="kw-2">&amp;mut</span> <span class="ident">diagnostics</span>);
 
     <span class="ident">diagnostics</span>.<span class="ident">to_result</span>()<span class="question-mark">?</span>;
 
@@ -510,7 +373,7 @@
             <span class="ident">generators</span>,
             <span class="ident">datasources</span>,
         },
-        <span class="ident">warnings</span>: <span class="ident">diagnostics</span>.<span class="ident">warnings</span>().<span class="ident">to_owned</span>(),
+        <span class="ident">warnings</span>: <span class="ident">diagnostics</span>.<span class="ident">into_warnings</span>(),
     })
 }
 
@@ -526,85 +389,31 @@
 <span class="comment">//  ************** RENDERING FUNCTIONS **************</span>
 <span class="comment">//</span>
 
-<span class="doccomment">/// Renders to a return string.</span>
+<span class="doccomment">/// Renders the datamodel _without configuration blocks_.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_datamodel_to_string</span>(<span class="ident">datamodel</span>: <span class="kw-2">&amp;</span><span class="ident">dml::Datamodel</span>, <span class="ident">configuration</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Configuration</span><span class="op">&gt;</span>) -&gt; <span class="ident">String</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writable_string</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">datamodel</span>.<span class="ident">models</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="number">20</span>);
-    <span class="ident">render_datamodel_to</span>(<span class="kw-2">&amp;mut</span> <span class="ident">writable_string</span>, <span class="ident">datamodel</span>, <span class="ident">configuration</span>);
-    <span class="ident">writable_string</span>
-}
-
-<span class="doccomment">/// Renders an AST to a string.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_schema_ast_to_string</span>(<span class="ident">schema</span>: <span class="kw-2">&amp;</span><span class="ident">ast::SchemaAst</span>) -&gt; <span class="ident">String</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writable_string</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">schema</span>.<span class="ident">tops</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="number">20</span>);
-
-    <span class="ident">render_schema_ast_to</span>(<span class="kw-2">&amp;mut</span> <span class="ident">writable_string</span>, <span class="ident">schema</span>, <span class="number">2</span>);
-
-    <span class="ident">writable_string</span>
-}
-
-<span class="doccomment">/// Renders as a string into the stream.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_datamodel_to</span>(
-    <span class="ident">stream</span>: <span class="kw-2">&amp;mut</span> <span class="kw">dyn</span> <span class="ident">std::fmt::Write</span>,
-    <span class="ident">datamodel</span>: <span class="kw-2">&amp;</span><span class="ident">dml::Datamodel</span>,
-    <span class="ident">configuration</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Configuration</span><span class="op">&gt;</span>,
-) {
     <span class="kw">let</span> <span class="ident">datasource</span> <span class="op">=</span> <span class="ident">configuration</span>.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">datasources</span>.<span class="ident">first</span>());
-
-    <span class="kw">let</span> <span class="ident">preview_features</span> <span class="op">=</span> <span class="ident">configuration</span>
-        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">preview_features</span>())
-        .<span class="ident">unwrap_or_else</span>(<span class="ident">BitFlags::empty</span>);
-
-    <span class="kw">let</span> <span class="ident">lowered</span> <span class="op">=</span> <span class="ident">LowerDmlToAst::new</span>(<span class="ident">datasource</span>, <span class="ident">preview_features</span>).<span class="ident">lower</span>(<span class="ident">datamodel</span>);
-
-    <span class="ident">render_schema_ast_to</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">lowered</span>, <span class="number">2</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String::new</span>();
+    <span class="ident">render::render_datamodel</span>(<span class="ident">render::RenderParams</span> { <span class="ident">datasource</span>, <span class="ident">datamodel</span> }, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
+    <span class="ident">reformat</span>(<span class="kw-2">&amp;</span><span class="ident">out</span>, <span class="ident">DEFAULT_INDENT_WIDTH</span>).<span class="ident">expect</span>(<span class="string">&quot;Internal error: failed to reformat introspected schema&quot;</span>)
 }
 
-<span class="doccomment">/// Renders as a string into the stream.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_datamodel_to_with_preview_flags</span>(
-    <span class="ident">stream</span>: <span class="kw-2">&amp;mut</span> <span class="kw">dyn</span> <span class="ident">std::fmt::Write</span>,
-    <span class="ident">datamodel</span>: <span class="kw-2">&amp;</span><span class="ident">dml::Datamodel</span>,
-    <span class="ident">datasource</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Datasource</span><span class="op">&gt;</span>,
-    <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">PreviewFeature</span><span class="op">&gt;</span>,
-) {
-    <span class="kw">let</span> <span class="ident">lowered</span> <span class="op">=</span> <span class="ident">LowerDmlToAst::new</span>(<span class="ident">datasource</span>, <span class="ident">flags</span>).<span class="ident">lower</span>(<span class="ident">datamodel</span>);
-    <span class="ident">render_schema_ast_to</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">lowered</span>, <span class="number">2</span>);
-}
-
-<span class="doccomment">/// Renders a datamodel, sources and generators to a string.</span>
+<span class="doccomment">/// Renders a datamodel, sources and generators.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_datamodel_and_config_to_string</span>(
     <span class="ident">datamodel</span>: <span class="kw-2">&amp;</span><span class="ident">dml::Datamodel</span>,
     <span class="ident">config</span>: <span class="kw-2">&amp;</span><span class="ident">configuration::Configuration</span>,
 ) -&gt; <span class="ident">String</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writable_string</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">datamodel</span>.<span class="ident">models</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="number">20</span>);
-
-    <span class="ident">render_datamodel_and_config_to</span>(<span class="kw-2">&amp;mut</span> <span class="ident">writable_string</span>, <span class="ident">datamodel</span>, <span class="ident">config</span>);
-
-    <span class="ident">writable_string</span>
-}
-
-<span class="doccomment">/// Renders a datamodel, generators and sources to a stream as a string.</span>
-<span class="kw">fn</span> <span class="ident">render_datamodel_and_config_to</span>(
-    <span class="ident">stream</span>: <span class="kw-2">&amp;mut</span> <span class="kw">dyn</span> <span class="ident">std::fmt::Write</span>,
-    <span class="ident">datamodel</span>: <span class="kw-2">&amp;</span><span class="ident">dml::Datamodel</span>,
-    <span class="ident">config</span>: <span class="kw-2">&amp;</span><span class="ident">configuration::Configuration</span>,
-) {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lowered</span> <span class="op">=</span> <span class="ident">LowerDmlToAst::new</span>(<span class="ident">config</span>.<span class="ident">datasources</span>.<span class="ident">first</span>(), <span class="ident">config</span>.<span class="ident">preview_features</span>()).<span class="ident">lower</span>(<span class="ident">datamodel</span>);
-
-    <span class="ident">dml_to_ast::add_sources_to_ast</span>(<span class="ident">config</span>, <span class="kw-2">&amp;mut</span> <span class="ident">lowered</span>);
-    <span class="ident">GeneratorSerializer::add_generators_to_ast</span>(<span class="kw-2">&amp;</span><span class="ident">config</span>.<span class="ident">generators</span>, <span class="kw-2">&amp;mut</span> <span class="ident">lowered</span>);
-
-    <span class="ident">render_schema_ast_to</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">lowered</span>, <span class="number">2</span>);
-}
-
-<span class="doccomment">/// Renders as a string into the stream.</span>
-<span class="kw">fn</span> <span class="ident">render_schema_ast_to</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;mut</span> <span class="kw">dyn</span> <span class="ident">std::fmt::Write</span>, <span class="ident">schema</span>: <span class="kw-2">&amp;</span><span class="ident">ast::SchemaAst</span>, <span class="ident">ident_width</span>: <span class="ident">usize</span>) {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">renderer</span> <span class="op">=</span> <span class="ident">schema_ast::renderer::Renderer::new</span>(<span class="ident">stream</span>, <span class="ident">ident_width</span>);
-    <span class="ident">renderer</span>.<span class="ident">render</span>(<span class="ident">schema</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String::new</span>();
+    <span class="kw">let</span> <span class="ident">datasource</span> <span class="op">=</span> <span class="ident">config</span>.<span class="ident">datasources</span>.<span class="ident">first</span>();
+    <span class="ident">render::render_configuration</span>(<span class="ident">config</span>, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
+    <span class="ident">render::render_datamodel</span>(<span class="ident">render::RenderParams</span> { <span class="ident">datasource</span>, <span class="ident">datamodel</span> }, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
+    <span class="ident">reformat</span>(<span class="kw-2">&amp;</span><span class="ident">out</span>, <span class="ident">DEFAULT_INDENT_WIDTH</span>).<span class="ident">expect</span>(<span class="string">&quot;Internal error: failed to reformat introspected schema&quot;</span>)
 }
 
 <span class="kw">fn</span> <span class="ident">preview_features</span>(<span class="ident">generators</span>: <span class="kw-2">&amp;</span>[<span class="ident">Generator</span>]) -&gt; <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">PreviewFeature</span><span class="op">&gt;</span> {
-    <span class="ident">generators</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">gen</span><span class="op">|</span> <span class="ident">gen</span>.<span class="ident">preview_features</span>()).<span class="ident">collect</span>()
+    <span class="ident">generators</span>.<span class="ident">iter</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">gen</span><span class="op">|</span> <span class="ident">gen</span>.<span class="ident">preview_features</span>).<span class="ident">collect</span>()
 }
+
+<span class="kw">const</span> <span class="ident">DEFAULT_INDENT_WIDTH</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">2</span>;
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="datamodel" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="datamodel" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

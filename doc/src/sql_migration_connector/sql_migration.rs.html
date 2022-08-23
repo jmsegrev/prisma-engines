@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `migration-engine/connectors/sql-migration-connector/src/sql_migration.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sql_migration.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../sql_migration_connector/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `migration-engine/connectors/sql-migration-connector/src/sql_migration.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sql_migration.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../sql_migration_connector/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../sql_migration_connector/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../sql_migration_connector/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../sql_migration_connector/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -617,38 +618,6 @@
 <span id="612">612</span>
 <span id="613">613</span>
 <span id="614">614</span>
-<span id="615">615</span>
-<span id="616">616</span>
-<span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
-<span id="638">638</span>
-<span id="639">639</span>
-<span id="640">640</span>
-<span id="641">641</span>
-<span id="642">642</span>
-<span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">pair::Pair</span>,
     <span class="ident">sql_renderer::IteratorJoin</span>,
@@ -656,8 +625,8 @@
 };
 <span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
 <span class="kw">use</span> <span class="ident">sql_schema_describer</span>::{
-    <span class="ident">walkers</span>::{<span class="ident">ColumnWalker</span>, <span class="ident">SqlSchemaExt</span>},
-    <span class="ident">ColumnId</span>, <span class="ident">EnumId</span>, <span class="ident">SqlSchema</span>, <span class="ident">TableId</span>,
+    <span class="ident">walkers</span>::{<span class="ident">ColumnWalker</span>, <span class="ident">TableWalker</span>},
+    <span class="ident">ColumnId</span>, <span class="ident">EnumId</span>, <span class="ident">ForeignKeyId</span>, <span class="ident">IndexId</span>, <span class="ident">SqlSchema</span>, <span class="ident">TableId</span>, <span class="ident">UdtId</span>, <span class="ident">ViewId</span>,
 };
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeSet</span>, <span class="ident">fmt::Write</span> <span class="kw">as</span> <span class="kw">_</span>};
 
@@ -711,17 +680,18 @@
             <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">idx</span> <span class="kw">as</span> <span class="ident">u32</span>;
             <span class="kw">match</span> <span class="ident">step</span> {
                 <span class="ident">SqlMigrationStep::AlterSequence</span>(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; (),
+                <span class="ident">SqlMigrationStep::CreateSchema</span>(<span class="kw">_</span>) =&gt; (), <span class="comment">// todo</span>
                 <span class="ident">SqlMigrationStep::DropView</span>(<span class="ident">drop_view</span>) =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::RemovedView</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">view_walker_at</span>(<span class="ident">drop_view</span>.<span class="ident">view_index</span>).<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="ident">drop_view</span>.<span class="ident">view_id</span>).<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
                 <span class="ident">SqlMigrationStep::DropUserDefinedType</span>(<span class="ident">drop_udt</span>) =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::RemovedUdt</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">udt_walker_at</span>(<span class="ident">drop_udt</span>.<span class="ident">udt_index</span>).<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="ident">drop_udt</span>.<span class="ident">udt_id</span>).<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
@@ -731,35 +701,31 @@
                 <span class="ident">SqlMigrationStep::AlterEnum</span>(<span class="ident">alter_enum</span>) =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedEnum</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">enums</span>(<span class="ident">alter_enum</span>.<span class="ident">id</span>).<span class="ident">previous</span>().<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="ident">alter_enum</span>.<span class="ident">id</span>).<span class="ident">previous</span>.<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
-                <span class="ident">SqlMigrationStep::DropForeignKey</span> { <span class="ident">table_id</span>, .. } =&gt; {
+                <span class="ident">SqlMigrationStep::DropForeignKey</span> { <span class="ident">foreign_key_id</span> } =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">foreign_key_id</span>).<span class="ident">table</span>().<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
                 <span class="ident">SqlMigrationStep::AlterPrimaryKey</span>(<span class="ident">table_id</span>) =&gt; {
-                    <span class="ident">drift_items</span>.<span class="ident">insert</span>((
-                        <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">before</span>.<span class="ident">table_walker_at</span>(<span class="ident">table_id</span>.<span class="ident">previous</span>).<span class="ident">name</span>(),
-                        <span class="ident">idx</span>,
-                    ));
+                    <span class="ident">drift_items</span>.<span class="ident">insert</span>((<span class="ident">DriftType::ChangedTable</span>, <span class="self">self</span>.<span class="ident">before</span>.<span class="ident">walk</span>(<span class="ident">table_id</span>.<span class="ident">previous</span>).<span class="ident">name</span>(), <span class="ident">idx</span>));
                 }
-                <span class="ident">SqlMigrationStep::DropIndex</span> { <span class="ident">table_id</span>, .. } =&gt; {
+                <span class="ident">SqlMigrationStep::DropIndex</span> { <span class="ident">index_id</span> } =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">index_id</span>).<span class="ident">table</span>().<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
                 <span class="ident">SqlMigrationStep::AlterTable</span>(<span class="ident">alter_table</span>) =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="kw-2">&amp;</span><span class="ident">alter_table</span>.<span class="ident">table_ids</span>).<span class="ident">previous</span>().<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="ident">alter_table</span>.<span class="ident">table_ids</span>).<span class="ident">previous</span>.<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
@@ -776,18 +742,15 @@
                     <span class="kw">for</span> <span class="ident">redefine</span> <span class="kw">in</span> <span class="ident">redefines</span> {
                         <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                             <span class="ident">DriftType::RedefinedTable</span>,
-                            <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="kw-2">&amp;</span><span class="ident">redefine</span>.<span class="ident">table_ids</span>).<span class="ident">previous</span>().<span class="ident">name</span>(),
+                            <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="ident">redefine</span>.<span class="ident">table_ids</span>).<span class="ident">previous</span>.<span class="ident">name</span>(),
                             <span class="ident">idx</span>,
                         ));
                     }
                 }
-                <span class="ident">SqlMigrationStep::RenameForeignKey</span> {
-                    <span class="ident">table_id</span>,
-                    <span class="ident">foreign_key_id</span>: <span class="kw">_</span>,
-                } =&gt; {
+                <span class="ident">SqlMigrationStep::RenameForeignKey</span> { <span class="ident">foreign_key_id</span> } =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="ident">table_id</span>).<span class="ident">next</span>().<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">foreign_key_id</span>).<span class="ident">next</span>.<span class="ident">table</span>().<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
@@ -795,23 +758,19 @@
                     <span class="ident">table_id</span>: (<span class="kw">_</span>, <span class="ident">table_id</span>),
                     ..
                 } =&gt; {
+                    <span class="ident">drift_items</span>.<span class="ident">insert</span>((<span class="ident">DriftType::ChangedTable</span>, <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>(), <span class="ident">idx</span>));
+                }
+                <span class="ident">SqlMigrationStep::AddForeignKey</span> { <span class="ident">foreign_key_id</span>: <span class="ident">id</span> } =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">id</span>).<span class="ident">table</span>().<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
-                <span class="ident">SqlMigrationStep::AddForeignKey</span> { <span class="ident">table_id</span>, .. } =&gt; {
+                <span class="ident">SqlMigrationStep::RenameIndex</span> { <span class="ident">index</span> } <span class="op">|</span> <span class="ident">SqlMigrationStep::RedefineIndex</span> { <span class="ident">index</span> } =&gt; {
                     <span class="ident">drift_items</span>.<span class="ident">insert</span>((
                         <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>(),
-                        <span class="ident">idx</span>,
-                    ));
-                }
-                <span class="ident">SqlMigrationStep::RenameIndex</span> { <span class="ident">table</span>, .. } <span class="op">|</span> <span class="ident">SqlMigrationStep::RedefineIndex</span> { <span class="ident">table</span>, .. } =&gt; {
-                    <span class="ident">drift_items</span>.<span class="ident">insert</span>((
-                        <span class="ident">DriftType::ChangedTable</span>,
-                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="ident">table</span>).<span class="ident">previous</span>().<span class="ident">name</span>(),
+                        <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">index</span>).<span class="ident">previous</span>.<span class="ident">table</span>().<span class="ident">name</span>(),
                         <span class="ident">idx</span>,
                     ));
                 }
@@ -860,9 +819,10 @@
                 <span class="ident">SqlMigrationStep::DropUserDefinedType</span>(<span class="kw">_</span>) =&gt; {}
                 <span class="ident">SqlMigrationStep::CreateEnum</span>(<span class="ident">enum_id</span>) =&gt; {
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  - &quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>().<span class="ident">walk_enum</span>(<span class="kw-2">*</span><span class="ident">enum_id</span>).<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">enum_id</span>).<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
                 }
+                <span class="ident">SqlMigrationStep::CreateSchema</span>(<span class="kw">_</span>) =&gt; {} <span class="comment">// todo</span>
                 <span class="ident">SqlMigrationStep::AlterEnum</span>(<span class="ident">alter_enum</span>) =&gt; {
                     <span class="kw">for</span> <span class="ident">added</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">alter_enum</span>.<span class="ident">created_variants</span> {
                         <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [+] Added variant `&quot;</span>);
@@ -877,35 +837,24 @@
                     }
                 }
                 <span class="ident">SqlMigrationStep::AlterPrimaryKey</span>(<span class="ident">table_id</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">table_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">table_walker_at</span>(<span class="ident">table_id</span>.<span class="ident">previous</span>).<span class="ident">name</span>();
+                    <span class="kw">let</span> <span class="ident">table_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="ident">table_id</span>.<span class="ident">previous</span>).<span class="ident">name</span>();
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;   [*] Changed the primary key for `&quot;</span>);
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">table_name</span>);
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;`\n&quot;</span>);
                 }
-                <span class="ident">SqlMigrationStep::DropForeignKey</span> {
-                    <span class="ident">foreign_key_index</span>,
-                    <span class="ident">table_id</span>,
-                } =&gt; {
-                    <span class="kw">let</span> <span class="ident">fk</span> <span class="op">=</span> <span class="self">self</span>
-                        .<span class="ident">schemas</span>()
-                        .<span class="ident">previous</span>()
-                        .<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>)
-                        .<span class="ident">foreign_key_at</span>(<span class="kw-2">*</span><span class="ident">foreign_key_index</span>);
+                <span class="ident">SqlMigrationStep::DropForeignKey</span> { <span class="ident">foreign_key_id</span> } =&gt; {
+                    <span class="kw">let</span> <span class="ident">fk</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">foreign_key_id</span>);
 
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [-] Removed foreign key on columns (&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">fk</span>.<span class="ident">constrained_column_names</span>().<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">fk</span>.<span class="ident">constrained_columns</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">name</span>()).<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>)
                 }
-                <span class="ident">SqlMigrationStep::DropIndex</span> { <span class="ident">table_id</span>, <span class="ident">index_index</span> } =&gt; {
-                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>
-                        .<span class="ident">schemas</span>()
-                        .<span class="ident">previous</span>()
-                        .<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>)
-                        .<span class="ident">index_at</span>(<span class="kw-2">*</span><span class="ident">index_index</span>);
+                <span class="ident">SqlMigrationStep::DropIndex</span> { <span class="ident">index_id</span> } =&gt; {
+                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">index_id</span>);
 
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [-] Removed &quot;</span>);
 
-                    <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">index_type</span>().<span class="ident">is_unique</span>() {
+                    <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">is_unique</span>() {
                         <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;unique &quot;</span>);
                     }
 
@@ -914,7 +863,7 @@
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>);
                 }
                 <span class="ident">SqlMigrationStep::AlterTable</span>(<span class="ident">alter_table</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">tables</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="kw-2">&amp;</span><span class="ident">alter_table</span>.<span class="ident">table_ids</span>);
+                    <span class="kw">let</span> <span class="ident">tables</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="ident">alter_table</span>.<span class="ident">table_ids</span>);
 
                     <span class="kw">for</span> <span class="ident">change</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">alter_table</span>.<span class="ident">changes</span> {
                         <span class="kw">match</span> <span class="ident">change</span> {
@@ -923,7 +872,7 @@
                                 <span class="ident">has_virtual_default</span>: <span class="kw">_</span>,
                             } =&gt; {
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [+] Added column `&quot;</span>);
-                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">tables</span>.<span class="ident">next</span>().<span class="ident">column_at</span>(<span class="kw-2">*</span><span class="ident">column_id</span>).<span class="ident">name</span>());
+                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">column_id</span>).<span class="ident">name</span>());
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;`\n&quot;</span>);
                             }
                             <span class="ident">TableChange::AlterColumn</span>(<span class="ident">alter_column</span>) =&gt; {
@@ -931,11 +880,11 @@
                                 <span class="macro">write!</span>(
                                     <span class="ident">out</span>,
                                     <span class="string">&quot;{}` &quot;</span>,
-                                    <span class="ident">tables</span>.<span class="ident">next</span>().<span class="ident">column_at</span>(<span class="kw-2">*</span><span class="ident">alter_column</span>.<span class="ident">column_id</span>.<span class="ident">next</span>()).<span class="ident">name</span>(),
+                                    <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="ident">alter_column</span>.<span class="ident">column_id</span>.<span class="ident">next</span>).<span class="ident">name</span>(),
                                 )
                                 .<span class="ident">unwrap</span>();
                                 <span class="ident">render_column_changes</span>(
-                                    <span class="ident">tables</span>.<span class="ident">columns</span>(<span class="kw-2">&amp;</span><span class="ident">alter_column</span>.<span class="ident">column_id</span>),
+                                    <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="ident">alter_column</span>.<span class="ident">column_id</span>),
                                     <span class="kw-2">&amp;</span><span class="ident">alter_column</span>.<span class="ident">changes</span>,
                                     <span class="kw-2">&amp;mut</span> <span class="ident">out</span>,
                                 );
@@ -943,29 +892,30 @@
                             }
                             <span class="ident">TableChange::DropColumn</span> { <span class="ident">column_id</span> } =&gt; {
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [-] Removed column `&quot;</span>);
-                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">tables</span>.<span class="ident">previous</span>().<span class="ident">column_at</span>(<span class="kw-2">*</span><span class="ident">column_id</span>).<span class="ident">name</span>());
+                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">column_id</span>).<span class="ident">name</span>());
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;`\n&quot;</span>);
                             }
                             <span class="ident">TableChange::DropAndRecreateColumn</span> { <span class="ident">column_id</span>, <span class="ident">changes</span> } =&gt; {
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [*] Column `&quot;</span>);
-                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">tables</span>.<span class="ident">next</span>().<span class="ident">column_at</span>(<span class="kw-2">*</span><span class="ident">column_id</span>.<span class="ident">next</span>()).<span class="ident">name</span>());
+                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="ident">column_id</span>.<span class="ident">next</span>).<span class="ident">name</span>());
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;` would be dropped and recreated &quot;</span>);
-                                <span class="ident">render_column_changes</span>(<span class="ident">tables</span>.<span class="ident">columns</span>(<span class="ident">column_id</span>), <span class="ident">changes</span>, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
+                                <span class="ident">render_column_changes</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">column_id</span>), <span class="ident">changes</span>, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
                                 <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
                             }
                             <span class="ident">TableChange::DropPrimaryKey</span> =&gt; {
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [-] Dropped the primary key on columns (&quot;</span>);
-                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">tables</span>.<span class="ident">previous</span>().<span class="ident">primary_key_column_names</span>().<span class="ident">unwrap</span>().<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
+                                <span class="ident">render_primary_key_column_names</span>(<span class="ident">tables</span>.<span class="ident">previous</span>, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>);
                             }
                             <span class="ident">TableChange::RenamePrimaryKey</span> =&gt; {
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [*] Renamed the primary key on columns (&quot;</span>);
-                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">tables</span>.<span class="ident">previous</span>().<span class="ident">primary_key_column_names</span>().<span class="ident">unwrap</span>().<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
+                                <span class="ident">render_primary_key_column_names</span>(<span class="ident">tables</span>.<span class="ident">previous</span>, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>);
                             }
                             <span class="ident">TableChange::AddPrimaryKey</span> =&gt; {
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [+] Added primary key on columns (&quot;</span>);
-                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">tables</span>.<span class="ident">next</span>().<span class="ident">primary_key_column_names</span>().<span class="ident">unwrap</span>().<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
+                                <span class="ident">render_primary_key_column_names</span>(<span class="ident">tables</span>.<span class="ident">next</span>, <span class="kw-2">&amp;mut</span> <span class="ident">out</span>);
+                                <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>);
                                 <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>);
                             }
                         }
@@ -973,41 +923,38 @@
                 }
                 <span class="ident">SqlMigrationStep::DropTable</span> { <span class="ident">table_id</span> } =&gt; {
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  - &quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
                 }
                 <span class="ident">SqlMigrationStep::DropEnum</span>(<span class="ident">enum_id</span>) =&gt; {
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  - &quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>().<span class="ident">walk_enum</span>(<span class="kw-2">*</span><span class="ident">enum_id</span>).<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">previous</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">enum_id</span>).<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
                 }
                 <span class="ident">SqlMigrationStep::CreateTable</span> { <span class="ident">table_id</span> } =&gt; {
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  - &quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
                 }
                 <span class="ident">SqlMigrationStep::RedefineTables</span>(<span class="kw">_</span>) =&gt; {}
-                <span class="ident">SqlMigrationStep::RenameForeignKey</span> {
-                    <span class="ident">table_id</span>,
-                    <span class="ident">foreign_key_id</span>,
-                } =&gt; {
-                    <span class="kw">let</span> <span class="ident">fks</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="ident">table_id</span>).<span class="ident">foreign_keys</span>(<span class="ident">foreign_key_id</span>);
+                <span class="ident">SqlMigrationStep::RenameForeignKey</span> { <span class="ident">foreign_key_id</span> } =&gt; {
+                    <span class="kw">let</span> <span class="ident">fks</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">foreign_key_id</span>);
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [*] Renamed the foreign key \&quot;&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">fks</span>.<span class="ident">previous</span>().<span class="ident">constraint_name</span>().<span class="ident">unwrap</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">fks</span>.<span class="ident">previous</span>.<span class="ident">constraint_name</span>().<span class="ident">unwrap</span>());
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;\&quot; to \&quot;&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">fks</span>.<span class="ident">next</span>().<span class="ident">constraint_name</span>().<span class="ident">unwrap</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">fks</span>.<span class="ident">next</span>.<span class="ident">constraint_name</span>().<span class="ident">unwrap</span>());
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;\&quot;\n&quot;</span>);
                 }
                 <span class="ident">SqlMigrationStep::CreateIndex</span> {
-                    <span class="ident">table_id</span>: (<span class="kw">_</span>, <span class="ident">table_id</span>),
-                    <span class="ident">index_index</span>,
+                    <span class="ident">table_id</span>: <span class="kw">_</span>,
+                    <span class="ident">index_id</span>,
                     <span class="ident">from_drop_and_recreate</span>: <span class="kw">_</span>,
                 } =&gt; {
-                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>().<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>).<span class="ident">index_at</span>(<span class="kw-2">*</span><span class="ident">index_index</span>);
+                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">index_id</span>);
 
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [+] Added &quot;</span>);
 
-                    <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">index_type</span>().<span class="ident">is_unique</span>() {
+                    <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">is_unique</span>() {
                         <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;unique &quot;</span>);
                     }
 
@@ -1015,34 +962,26 @@
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">index</span>.<span class="ident">column_names</span>().<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>);
                 }
-                <span class="ident">SqlMigrationStep::AddForeignKey</span> {
-                    <span class="ident">table_id</span>,
-                    <span class="ident">foreign_key_index</span>,
-                } =&gt; {
-                    <span class="kw">let</span> <span class="ident">foreign_key</span> <span class="op">=</span> <span class="self">self</span>
-                        .<span class="ident">schemas</span>()
-                        .<span class="ident">next</span>()
-                        .<span class="ident">table_walker_at</span>(<span class="kw-2">*</span><span class="ident">table_id</span>)
-                        .<span class="ident">foreign_key_at</span>(<span class="kw-2">*</span><span class="ident">foreign_key_index</span>);
-
+                <span class="ident">SqlMigrationStep::AddForeignKey</span> { <span class="ident">foreign_key_id</span> } =&gt; {
+                    <span class="kw">let</span> <span class="ident">foreign_key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">next</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">foreign_key_id</span>);
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [+] Added foreign key on columns (&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">foreign_key</span>.<span class="ident">constrained_column_names</span>().<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">foreign_key</span>.<span class="ident">constrained_columns</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">name</span>()).<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>));
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;)\n&quot;</span>)
                 }
-                <span class="ident">SqlMigrationStep::RenameIndex</span> { <span class="ident">table</span>, <span class="ident">index</span> } =&gt; {
-                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="ident">table</span>).<span class="ident">indexes</span>(<span class="ident">index</span>);
+                <span class="ident">SqlMigrationStep::RenameIndex</span> { <span class="ident">index</span> } =&gt; {
+                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">index</span>);
 
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [*] Renamed index `&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">index</span>.<span class="ident">previous</span>().<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">index</span>.<span class="ident">previous</span>.<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;` to `&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">index</span>.<span class="ident">next</span>().<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">index</span>.<span class="ident">next</span>.<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;`\n&quot;</span>);
                 }
-                <span class="ident">SqlMigrationStep::RedefineIndex</span> { <span class="ident">table</span>, <span class="ident">index</span> } =&gt; {
-                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">tables</span>(<span class="ident">table</span>).<span class="ident">indexes</span>(<span class="ident">index</span>);
+                <span class="ident">SqlMigrationStep::RedefineIndex</span> { <span class="ident">index</span> } =&gt; {
+                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">schemas</span>().<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">index</span>);
 
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;  [*] Redefined index `&quot;</span>);
-                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">index</span>.<span class="ident">previous</span>().<span class="ident">name</span>());
+                    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">index</span>.<span class="ident">previous</span>.<span class="ident">name</span>());
                     <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot;`\n&quot;</span>);
                 }
             }
@@ -1058,17 +997,17 @@
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">change</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">change</span> {
             <span class="ident">ColumnChange::Arity</span> =&gt; <span class="macro">format!</span>(
                 <span class="string">&quot;changed from {:?} to {:?}&quot;</span>,
-                <span class="ident">columns</span>.<span class="ident">previous</span>().<span class="ident">arity</span>(),
-                <span class="ident">columns</span>.<span class="ident">next</span>().<span class="ident">arity</span>()
+                <span class="ident">columns</span>.<span class="ident">previous</span>.<span class="ident">arity</span>(),
+                <span class="ident">columns</span>.<span class="ident">next</span>.<span class="ident">arity</span>()
             ),
             <span class="ident">ColumnChange::Default</span> =&gt; <span class="macro">format!</span>(
                 <span class="string">&quot;default changed from `{:?}` to `{:?}`&quot;</span>,
-                <span class="ident">columns</span>.<span class="ident">previous</span>().<span class="ident">default</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">kind</span>()),
-                <span class="ident">columns</span>.<span class="ident">next</span>().<span class="ident">default</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">kind</span>())
+                <span class="ident">columns</span>.<span class="ident">previous</span>.<span class="ident">default</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">kind</span>()),
+                <span class="ident">columns</span>.<span class="ident">next</span>.<span class="ident">default</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">kind</span>())
             ),
             <span class="ident">ColumnChange::TypeChanged</span> =&gt; <span class="string">&quot;type changed&quot;</span>.<span class="ident">to_owned</span>(),
             <span class="ident">ColumnChange::Autoincrement</span> =&gt; {
-                <span class="kw">if</span> <span class="ident">columns</span>.<span class="ident">previous</span>().<span class="ident">is_autoincrement</span>() {
+                <span class="kw">if</span> <span class="ident">columns</span>.<span class="ident">previous</span>.<span class="ident">is_autoincrement</span>() {
                     <span class="string">&quot;column is no longer autoincrementing&quot;</span>.<span class="ident">to_owned</span>()
                 } <span class="kw">else</span> {
                     <span class="string">&quot;column became autoincrementing&quot;</span>.<span class="ident">to_owned</span>()
@@ -1088,18 +1027,17 @@
 <span class="comment">// you would intuitively expect.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">SqlMigrationStep</span> {
+    <span class="ident">CreateSchema</span>(<span class="ident">sql_schema_describer::NamespaceId</span>),
     <span class="ident">AlterSequence</span>(<span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">SequenceChanges</span>),
     <span class="ident">DropView</span>(<span class="ident">DropView</span>),
     <span class="ident">DropUserDefinedType</span>(<span class="ident">DropUserDefinedType</span>),
     <span class="ident">CreateEnum</span>(<span class="ident">sql_schema_describer::EnumId</span>),
     <span class="ident">AlterEnum</span>(<span class="ident">AlterEnum</span>),
     <span class="ident">DropForeignKey</span> {
-        <span class="ident">table_id</span>: <span class="ident">TableId</span>,
-        <span class="ident">foreign_key_index</span>: <span class="ident">usize</span>,
+        <span class="ident">foreign_key_id</span>: <span class="ident">ForeignKeyId</span>,
     },
     <span class="ident">DropIndex</span> {
-        <span class="ident">table_id</span>: <span class="ident">TableId</span>,
-        <span class="ident">index_index</span>: <span class="ident">usize</span>,
+        <span class="ident">index_id</span>: <span class="ident">IndexId</span>,
     },
     <span class="ident">AlterTable</span>(<span class="ident">AlterTable</span>),
     <span class="ident">AlterPrimaryKey</span>(<span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">TableId</span><span class="op">&gt;</span>),
@@ -1124,28 +1062,22 @@
     <span class="comment">// on fields that are dropped/created there.</span>
     <span class="ident">CreateIndex</span> {
         <span class="ident">table_id</span>: (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TableId</span><span class="op">&gt;</span>, <span class="ident">TableId</span>),
-        <span class="ident">index_index</span>: <span class="ident">usize</span>,
+        <span class="ident">index_id</span>: <span class="ident">IndexId</span>,
         <span class="ident">from_drop_and_recreate</span>: <span class="ident">bool</span>,
     },
     <span class="ident">RenameForeignKey</span> {
-        <span class="ident">table_id</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">TableId</span><span class="op">&gt;</span>,
-        <span class="ident">foreign_key_id</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+        <span class="ident">foreign_key_id</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">ForeignKeyId</span><span class="op">&gt;</span>,
     },
     <span class="comment">// Order matters: this needs to come after create_indexes, because the foreign keys can depend on unique</span>
     <span class="comment">// indexes created there.</span>
     <span class="ident">AddForeignKey</span> {
-        <span class="doccomment">/// The index of the table in the next schema.</span>
-        <span class="ident">table_id</span>: <span class="ident">TableId</span>,
-        <span class="doccomment">/// The index of the foreign key in the table.</span>
-        <span class="ident">foreign_key_index</span>: <span class="ident">usize</span>,
+        <span class="ident">foreign_key_id</span>: <span class="ident">ForeignKeyId</span>,
     },
     <span class="ident">RenameIndex</span> {
-        <span class="ident">table</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">TableId</span><span class="op">&gt;</span>,
-        <span class="ident">index</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+        <span class="ident">index</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">IndexId</span><span class="op">&gt;</span>,
     },
     <span class="ident">RedefineIndex</span> {
-        <span class="ident">table</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">TableId</span><span class="op">&gt;</span>,
-        <span class="ident">index</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+        <span class="ident">index</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">IndexId</span><span class="op">&gt;</span>,
     },
 }
 
@@ -1159,6 +1091,7 @@
             <span class="ident">SqlMigrationStep::AlterTable</span>(<span class="kw">_</span>) =&gt; <span class="string">&quot;AlterTable&quot;</span>,
             <span class="ident">SqlMigrationStep::CreateEnum</span>(<span class="kw">_</span>) =&gt; <span class="string">&quot;CreateEnum&quot;</span>,
             <span class="ident">SqlMigrationStep::CreateIndex</span> { .. } =&gt; <span class="string">&quot;CreateIndex&quot;</span>,
+            <span class="ident">SqlMigrationStep::CreateSchema</span> { .. } =&gt; <span class="string">&quot;CreateSchema&quot;</span>,
             <span class="ident">SqlMigrationStep::CreateTable</span> { .. } =&gt; <span class="string">&quot;CreateTable&quot;</span>,
             <span class="ident">SqlMigrationStep::DropEnum</span>(<span class="kw">_</span>) =&gt; <span class="string">&quot;DropEnum&quot;</span>,
             <span class="ident">SqlMigrationStep::DropForeignKey</span> { .. } =&gt; <span class="string">&quot;DropForeignKey&quot;</span>,
@@ -1202,29 +1135,24 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">DropView</span> {
-    <span class="kw">pub</span> <span class="ident">view_index</span>: <span class="ident">usize</span>,
+    <span class="kw">pub</span> <span class="ident">view_id</span>: <span class="ident">ViewId</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">DropView</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">view_index</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">view_index</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">view_id</span>: <span class="ident">ViewId</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">view_id</span> }
     }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">DropUserDefinedType</span> {
-    <span class="kw">pub</span> <span class="ident">udt_index</span>: <span class="ident">usize</span>,
+    <span class="kw">pub</span> <span class="ident">udt_id</span>: <span class="ident">UdtId</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">DropUserDefinedType</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">udt_index</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">udt_index</span> }
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">udt_id</span>: <span class="ident">UdtId</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">udt_id</span> }
     }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">DropColumn</span> {
-    <span class="kw">pub</span> <span class="ident">index</span>: <span class="ident">usize</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
@@ -1246,12 +1174,11 @@
     <span class="kw">pub</span> <span class="ident">id</span>: <span class="ident">Pair</span><span class="op">&lt;</span><span class="ident">EnumId</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">created_variants</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">dropped_variants</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// This should be intepreted as ((prev_tblidx, prev_colidx),</span>
-    <span class="doccomment">/// Option&lt;(next_tblidx, next_colidx)&gt;) The second item in the tuple is</span>
-    <span class="doccomment">/// `Some` _only_ when the next column has the same enum as a default, such</span>
-    <span class="doccomment">/// that the default would need to be reinstalled after the drop.</span>
+    <span class="doccomment">/// This should be intepreted as prev_colidx, Option&lt;next_colidx&gt;) The second item in the tuple</span>
+    <span class="doccomment">/// is `Some` _only_ when the next column has the same enum as a default, such that the default</span>
+    <span class="doccomment">/// would need to be reinstalled after the drop.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::type_complexity</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">previous_usages_as_default</span>: <span class="ident">Vec</span><span class="op">&lt;</span>((<span class="ident">TableId</span>, <span class="ident">ColumnId</span>), <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">TableId</span>, <span class="ident">ColumnId</span>)<span class="op">&gt;</span>)<span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">previous_usages_as_default</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">ColumnId</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnId</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">AlterEnum</span> {
@@ -1295,6 +1222,16 @@
     <span class="ident">Cache</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">3</span>,
     <span class="ident">Increment</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">4</span>,
 }
+
+<span class="kw">fn</span> <span class="ident">render_primary_key_column_names</span>(<span class="ident">table</span>: <span class="ident">TableWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">out</span>: <span class="kw-2">&amp;mut</span> <span class="ident">String</span>) {
+    <span class="kw">let</span> <span class="ident">cols</span> <span class="op">=</span> <span class="ident">table</span>
+        .<span class="ident">primary_key_columns</span>()
+        .<span class="ident">into_iter</span>()
+        .<span class="ident">flatten</span>()
+        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">name</span>())
+        .<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>);
+    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">cols</span>);
+}
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="sql_migration_connector" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="sql_migration_connector" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

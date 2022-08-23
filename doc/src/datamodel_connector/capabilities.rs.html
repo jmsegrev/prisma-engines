@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/connectors/datamodel-connector/src/capabilities.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>capabilities.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../datamodel_connector/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/connectors/datamodel-connector/src/capabilities.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>capabilities.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../datamodel_connector/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../datamodel_connector/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../datamodel_connector/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../datamodel_connector/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -163,6 +164,13 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
 
 <span class="doccomment">/// Not all Databases are created equal. Hence connectors for our datasources support different capabilities.</span>
@@ -208,9 +216,7 @@
 <span class="macro">capabilities!</span>(
     <span class="comment">// General capabilities, not specific to any part of Prisma.</span>
     <span class="ident">ScalarLists</span>,
-    <span class="ident">RelationsOverNonUniqueCriteria</span>,
     <span class="ident">Enums</span>,
-    <span class="ident">EnumArrayPush</span>,
     <span class="ident">Json</span>,
     <span class="ident">JsonLists</span>,
     <span class="ident">AutoIncrement</span>,
@@ -219,6 +225,7 @@
     <span class="ident">DefaultValueAuto</span>,
     <span class="ident">TwoWayEmbeddedManyToManyRelation</span>,
     <span class="ident">ImplicitManyToManyRelation</span>,
+    <span class="ident">MultiSchema</span>,
     <span class="comment">//Start of ME/IE only capabilities</span>
     <span class="ident">AutoIncrementAllowedOnNonId</span>,
     <span class="ident">AutoIncrementMultipleAllowed</span>,
@@ -234,6 +241,7 @@
     <span class="ident">MultipleFullTextAttributesPerModel</span>,
     <span class="ident">ClusteringSetting</span>,
     <span class="comment">// Start of query-engine-only Capabilities</span>
+    <span class="ident">EnumArrayPush</span>,
     <span class="ident">InsensitiveFilters</span>,
     <span class="ident">CreateMany</span>,
     <span class="ident">CreateManyWriteableAutoIncId</span>,
@@ -253,7 +261,14 @@
     <span class="ident">AdvancedJsonNullability</span>,    <span class="comment">// Connector distinguishes between their null type and JSON null.</span>
     <span class="ident">UndefinedType</span>,              <span class="comment">// Connector distinguishes `null` and `undefined`</span>
     <span class="ident">DecimalType</span>,                <span class="comment">// Connector supports Prisma Decimal type.</span>
-    <span class="ident">BackwardCompatibleQueryRaw</span> <span class="comment">// Temporary SQLite specific capability. Should be removed once https://github.com/prisma/prisma/issues/12784 is fixed</span>
+    <span class="ident">BackwardCompatibleQueryRaw</span>, <span class="comment">// Temporary SQLite specific capability. Should be removed once https://github.com/prisma/prisma/issues/12784 is fixed,</span>
+    <span class="ident">OrderByNullsFirstLast</span>,      <span class="comment">// Connector supports ORDER BY NULLS LAST/FIRST</span>
+    <span class="comment">// Block of isolation levels.</span>
+    <span class="ident">SupportsTxIsolationReadUncommitted</span>,
+    <span class="ident">SupportsTxIsolationReadCommitted</span>,
+    <span class="ident">SupportsTxIsolationRepeatableRead</span>,
+    <span class="ident">SupportsTxIsolationSerializable</span>,
+    <span class="ident">SupportsTxIsolationSnapshot</span>,
 );
 
 <span class="doccomment">/// Contains all capabilities that the connector is able to serve.</span>
@@ -324,5 +339,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="datamodel_connector" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="datamodel_connector" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

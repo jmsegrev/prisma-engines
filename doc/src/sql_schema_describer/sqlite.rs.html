@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/sql-schema-describer/src/sqlite.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sqlite.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../sql_schema_describer/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/sql-schema-describer/src/sqlite.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sqlite.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../sql_schema_describer/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../sql_schema_describer/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../sql_schema_describer/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../sql_schema_describer/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -576,24 +577,89 @@
 <span id="571">571</span>
 <span id="572">572</span>
 <span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
 </pre><pre class="rust"><code><span class="doccomment">//! SQLite description.</span>
+
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">common::purge_dangling_foreign_keys</span>, <span class="ident">getters::Getter</span>, <span class="ident">parsers::Parser</span>, <span class="ident">Column</span>, <span class="ident">ColumnArity</span>, <span class="ident">ColumnType</span>,
-    <span class="ident">ColumnTypeFamily</span>, <span class="ident">DefaultValue</span>, <span class="ident">DescriberResult</span>, <span class="ident">ForeignKey</span>, <span class="ident">ForeignKeyAction</span>, <span class="ident">Index</span>, <span class="ident">IndexColumn</span>, <span class="ident">IndexType</span>, <span class="ident">Lazy</span>,
-    <span class="ident">PrimaryKey</span>, <span class="ident">PrimaryKeyColumn</span>, <span class="ident">PrismaValue</span>, <span class="ident">Regex</span>, <span class="ident">SQLSortOrder</span>, <span class="ident">SqlMetadata</span>, <span class="ident">SqlSchema</span>, <span class="ident">SqlSchemaDescriberBackend</span>,
-    <span class="ident">Table</span>, <span class="ident">View</span>,
+    <span class="ident">getters::Getter</span>, <span class="ident">ids</span>::<span class="kw-2">*</span>, <span class="ident">parsers::Parser</span>, <span class="ident">Column</span>, <span class="ident">ColumnArity</span>, <span class="ident">ColumnType</span>, <span class="ident">ColumnTypeFamily</span>, <span class="ident">DefaultValue</span>,
+    <span class="ident">DescriberResult</span>, <span class="ident">ForeignKeyAction</span>, <span class="ident">Lazy</span>, <span class="ident">PrismaValue</span>, <span class="ident">Regex</span>, <span class="ident">SQLSortOrder</span>, <span class="ident">SqlMetadata</span>, <span class="ident">SqlSchema</span>,
+    <span class="ident">SqlSchemaDescriberBackend</span>, <span class="ident">View</span>,
 };
-<span class="kw">use</span> <span class="ident">quaint</span>::{<span class="ident">ast::Value</span>, <span class="ident">prelude::Queryable</span>};
+<span class="kw">use</span> <span class="ident">indexmap::IndexMap</span>;
+<span class="kw">use</span> <span class="ident">quaint</span>::{
+    <span class="ident">ast::Value</span>,
+    <span class="ident">connector</span>::{<span class="ident">GetRow</span>, <span class="ident">ToColumnNames</span>},
+    <span class="ident">prelude::ResultRow</span>,
+};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">any::type_name</span>, <span class="ident">borrow::Cow</span>, <span class="ident">collections::BTreeMap</span>, <span class="ident">convert::TryInto</span>, <span class="ident">fmt::Debug</span>, <span class="ident">path::Path</span>};
 <span class="kw">use</span> <span class="ident">tracing::trace</span>;
 
+<span class="attribute">#[<span class="ident">async_trait::async_trait</span>]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Connection</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_raw</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
+        <span class="ident">sql</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">params</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">quaint::prelude::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>],
+    ) -&gt; <span class="ident">quaint::Result</span><span class="op">&lt;</span><span class="ident">quaint::prelude::ResultSet</span><span class="op">&gt;</span>;
+}
+
+<span class="attribute">#[<span class="ident">async_trait::async_trait</span>]</span>
+<span class="kw">impl</span> <span class="ident">Connection</span> <span class="kw">for</span> <span class="ident">std::sync::Mutex</span><span class="op">&lt;</span><span class="ident">quaint::connector::rusqlite::Connection</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_raw</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
+        <span class="ident">sql</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">params</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">quaint::prelude::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>],
+    ) -&gt; <span class="ident">quaint::Result</span><span class="op">&lt;</span><span class="ident">quaint::prelude::ResultSet</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">conn</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">prepare_cached</span>(<span class="ident">sql</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rows</span> <span class="op">=</span> <span class="ident">stmt</span>.<span class="ident">query</span>(<span class="ident">quaint::connector::rusqlite::params_from_iter</span>(<span class="ident">params</span>.<span class="ident">iter</span>()))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">column_names</span> <span class="op">=</span> <span class="ident">rows</span>.<span class="ident">to_column_names</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">converted_rows</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">row</span>) <span class="op">=</span> <span class="ident">rows</span>.<span class="ident">next</span>()<span class="question-mark">?</span> {
+            <span class="ident">converted_rows</span>.<span class="ident">push</span>(<span class="ident">row</span>.<span class="ident">get_result_row</span>().<span class="ident">unwrap</span>());
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="ident">quaint::prelude::ResultSet::new</span>(<span class="ident">column_names</span>, <span class="ident">converted_rows</span>))
+    }
+}
+
+<span class="attribute">#[<span class="ident">async_trait::async_trait</span>]</span>
+<span class="kw">impl</span> <span class="ident">Connection</span> <span class="kw">for</span> <span class="ident">quaint::single::Quaint</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_raw</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
+        <span class="ident">sql</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">params</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">quaint::prelude::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>],
+    ) -&gt; <span class="ident">quaint::Result</span><span class="op">&lt;</span><span class="ident">quaint::prelude::ResultSet</span><span class="op">&gt;</span> {
+        <span class="ident">quaint::prelude::Queryable::query_raw</span>(<span class="self">self</span>, <span class="ident">sql</span>, <span class="ident">params</span>).<span class="kw">await</span>
+    }
+}
+
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SqlSchemaDescriber</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">Queryable</span>,
+    <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> (<span class="kw">dyn</span> <span class="ident">Connection</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>),
 }
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">SqlSchemaDescriber</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="ident">type_name</span>::<span class="op">&lt;</span><span class="ident">SqlSchemaDescriber</span><span class="op">&gt;</span>()).<span class="ident">finish</span>()
+        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="ident">type_name</span>::<span class="op">&lt;</span><span class="ident">SqlSchemaDescriber</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>()).<span class="ident">finish</span>()
     }
 }
 
@@ -603,8 +669,9 @@
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">get_databases</span>().<span class="kw">await</span><span class="question-mark">?</span>)
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">SqlMetadata</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">table_count</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_table_names</span>(<span class="ident">schema</span>).<span class="kw">await</span><span class="question-mark">?</span>.<span class="ident">len</span>();
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">SqlMetadata</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sql_schema</span> <span class="op">=</span> <span class="ident">SqlSchema::default</span>();
+        <span class="kw">let</span> <span class="ident">table_count</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_table_names</span>(<span class="kw-2">&amp;mut</span> <span class="ident">sql_schema</span>).<span class="kw">await</span><span class="question-mark">?</span>.<span class="ident">len</span>();
         <span class="kw">let</span> <span class="ident">size_in_bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_size</span>().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">SqlMetadata</span> {
@@ -613,47 +680,12 @@
         })
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">describe</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">SqlSchema</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">table_names</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_table_names</span>(<span class="ident">schema</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tables</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">table_names</span>.<span class="ident">len</span>());
-
-        <span class="kw">for</span> <span class="ident">table_name</span> <span class="kw">in</span> <span class="ident">table_names</span>.<span class="ident">iter</span>().<span class="ident">filter</span>(<span class="op">|</span><span class="ident">table</span><span class="op">|</span> <span class="op">!</span><span class="ident">is_system_table</span>(<span class="ident">table</span>)) {
-            <span class="ident">tables</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">get_table</span>(<span class="ident">schema</span>, <span class="ident">table_name</span>).<span class="kw">await</span><span class="question-mark">?</span>)
-        }
-
-        <span class="comment">// Since referential integrity is optional on SQLite, we remove foreign keys</span>
-        <span class="comment">// not pointing to an existing table ex post.</span>
-        <span class="ident">purge_dangling_foreign_keys</span>(<span class="kw-2">&amp;mut</span> <span class="ident">tables</span>);
-
-        <span class="comment">// SQLite allows foreign key definitions without specifying the referenced columns, it then assumes the pk is used.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">foreign_keys_without_referenced_columns</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">for</span> (<span class="ident">table_index</span>, <span class="ident">table</span>) <span class="kw">in</span> <span class="ident">tables</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
-            <span class="kw">for</span> (<span class="ident">fk_index</span>, <span class="ident">foreign_key</span>) <span class="kw">in</span> <span class="ident">table</span>.<span class="ident">foreign_keys</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
-                <span class="kw">if</span> <span class="ident">foreign_key</span>.<span class="ident">referenced_columns</span>.<span class="ident">is_empty</span>() {
-                    <span class="kw">let</span> <span class="ident">referenced_table</span> <span class="op">=</span> <span class="ident">tables</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">t</span>.<span class="ident">name</span> <span class="op">==</span> <span class="ident">foreign_key</span>.<span class="ident">referenced_table</span>).<span class="ident">unwrap</span>();
-                    <span class="kw">let</span> <span class="ident">referenced_pk</span> <span class="op">=</span> <span class="ident">referenced_table</span>.<span class="ident">primary_key</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>();
-                    <span class="ident">foreign_keys_without_referenced_columns</span>.<span class="ident">push</span>((<span class="ident">table_index</span>, <span class="ident">fk_index</span>, <span class="ident">referenced_pk</span>.<span class="ident">columns</span>.<span class="ident">clone</span>()))
-                }
-            }
-        }
-
-        <span class="kw">for</span> (<span class="ident">table_index</span>, <span class="ident">fk_index</span>, <span class="ident">columns</span>) <span class="kw">in</span> <span class="ident">foreign_keys_without_referenced_columns</span> {
-            <span class="ident">tables</span>[<span class="ident">table_index</span>].<span class="ident">foreign_keys</span>[<span class="ident">fk_index</span>].<span class="ident">referenced_columns</span> <span class="op">=</span>
-                <span class="ident">columns</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">name</span>).<span class="ident">collect</span>()
-        }
-
-        <span class="kw">let</span> <span class="ident">views</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_views</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(<span class="ident">SqlSchema</span> {
-            <span class="ident">tables</span>,
-            <span class="ident">views</span>,
-            ..<span class="ident">Default::default</span>()
-        })
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">describe</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">SqlSchema</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">describe_impl</span>().<span class="kw">await</span>
     }
 
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">version</span>().<span class="kw">await</span><span class="question-mark">?</span>)
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">quaint::connector::sqlite_version</span>().<span class="ident">to_owned</span>()))
     }
 }
 
@@ -661,8 +693,26 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">SqlSchemaDescriber</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Constructor.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">Queryable</span>) -&gt; <span class="ident">SqlSchemaDescriber</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> (<span class="kw">dyn</span> <span class="ident">Connection</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>)) -&gt; <span class="ident">SqlSchemaDescriber</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">SqlSchemaDescriber</span> { <span class="ident">conn</span> }
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">describe_impl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">SqlSchema</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">schema</span> <span class="op">=</span> <span class="ident">SqlSchema::default</span>();
+        <span class="kw">let</span> <span class="ident">table_ids</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_table_names</span>(<span class="kw-2">&amp;mut</span> <span class="ident">schema</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="kw">for</span> (<span class="ident">table_name</span>, <span class="ident">table_id</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">table_ids</span> {
+            <span class="self">self</span>.<span class="ident">push_table</span>(<span class="ident">table_name</span>, <span class="kw-2">*</span><span class="ident">table_id</span>, <span class="kw-2">&amp;mut</span> <span class="ident">schema</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        }
+
+        <span class="kw">for</span> (<span class="ident">table_name</span>, <span class="ident">table_id</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">table_ids</span> {
+            <span class="self">self</span>.<span class="ident">push_foreign_keys</span>(<span class="ident">table_name</span>, <span class="kw-2">*</span><span class="ident">table_id</span>, <span class="kw-2">&amp;</span><span class="ident">table_ids</span>, <span class="kw-2">&amp;mut</span> <span class="ident">schema</span>)
+                .<span class="kw">await</span><span class="question-mark">?</span>;
+        }
+
+        <span class="ident">schema</span>.<span class="ident">views</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_views</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="ident">schema</span>)
     }
 
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_databases</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {
@@ -687,21 +737,25 @@
         <span class="prelude-val">Ok</span>(<span class="ident">names</span>)
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_table_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_table_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">schema</span>: <span class="kw-2">&amp;mut</span> <span class="ident">SqlSchema</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">IndexMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">TableId</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="string">r#&quot;SELECT name FROM sqlite_master WHERE type=&#39;table&#39; ORDER BY name ASC&quot;#</span>;
-        <span class="macro">trace!</span>(<span class="string">&quot;describing table names with query: &#39;{}&#39;&quot;</span>, <span class="ident">sql</span>);
 
         <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">names</span> <span class="op">=</span> <span class="ident">result_set</span>
             .<span class="ident">into_iter</span>()
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">unwrap</span>())
-            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span> <span class="op">!</span><span class="op">=</span> <span class="string">&quot;sqlite_sequence&quot;</span>)
-            .<span class="ident">collect</span>();
+            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">table_name</span><span class="op">|</span> <span class="op">!</span><span class="ident">is_system_table</span>(<span class="ident">table_name</span>));
 
-        <span class="macro">trace!</span>(<span class="string">&quot;Found table names: {:?}&quot;</span>, <span class="ident">names</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">IndexMap::default</span>();
 
-        <span class="prelude-val">Ok</span>(<span class="ident">names</span>)
+        <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">names</span> {
+            <span class="kw">let</span> <span class="ident">cloned_name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">clone</span>();
+            <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="ident">schema</span>.<span class="ident">push_table</span>(<span class="ident">name</span>, <span class="ident">Default::default</span>());
+            <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">cloned_name</span>, <span class="ident">id</span>);
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="ident">map</span>)
     }
 
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
@@ -715,18 +769,9 @@
         <span class="prelude-val">Ok</span>(<span class="ident">size</span>.<span class="ident">try_into</span>().<span class="ident">unwrap</span>())
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_table</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_schema</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">Table</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> (<span class="ident">columns</span>, <span class="ident">primary_key</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_columns</span>(<span class="ident">name</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">foreign_keys</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_foreign_keys</span>(<span class="ident">name</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">indices</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_indices</span>(<span class="ident">name</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(<span class="ident">Table</span> {
-            <span class="ident">name</span>: <span class="ident">name</span>.<span class="ident">to_string</span>(),
-            <span class="ident">columns</span>,
-            <span class="ident">indices</span>,
-            <span class="ident">primary_key</span>,
-            <span class="ident">foreign_keys</span>,
-        })
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">push_table</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">table_id</span>: <span class="ident">TableId</span>, <span class="ident">schema</span>: <span class="kw-2">&amp;mut</span> <span class="ident">SqlSchema</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">push_columns</span>(<span class="ident">name</span>, <span class="ident">table_id</span>, <span class="ident">schema</span>, <span class="self">self</span>.<span class="ident">conn</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">push_indexes</span>(<span class="ident">name</span>, <span class="ident">table_id</span>, <span class="ident">schema</span>, <span class="self">self</span>.<span class="ident">conn</span>).<span class="kw">await</span>
     }
 
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_views</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">View</span><span class="op">&gt;</span><span class="op">&gt;</span> {
@@ -744,341 +789,337 @@
         <span class="prelude-val">Ok</span>(<span class="ident">views</span>)
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Column</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PrimaryKey</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA table_info (&quot;{}&quot;)&quot;#</span>, <span class="ident">table</span>);
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">push_foreign_keys</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">table_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">table_id</span>: <span class="ident">TableId</span>,
+        <span class="ident">table_ids</span>: <span class="kw-2">&amp;</span><span class="ident">IndexMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">TableId</span><span class="op">&gt;</span>,
+        <span class="ident">schema</span>: <span class="kw-2">&amp;mut</span> <span class="ident">SqlSchema</span>,
+    ) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA foreign_key_list(&quot;{}&quot;);&quot;#</span>, <span class="ident">table_name</span>);
         <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pk_cols</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cols</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Column</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">result_set</span>
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> {
-                <span class="macro">trace!</span>(<span class="string">&quot;Got column row {:?}&quot;</span>, <span class="ident">row</span>);
-                <span class="kw">let</span> <span class="ident">is_required</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;notnull&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_bool</span>()).<span class="ident">expect</span>(<span class="string">&quot;notnull&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current_foreign_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i64</span>, <span class="ident">ForeignKeyId</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current_foreign_key_columns</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">i64</span>, <span class="ident">ColumnId</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnId</span><span class="op">&gt;</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
 
-                <span class="kw">let</span> <span class="ident">arity</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">is_required</span> {
-                    <span class="ident">ColumnArity::Required</span>
-                } <span class="kw">else</span> {
-                    <span class="ident">ColumnArity::Nullable</span>
-                };
+        <span class="kw">fn</span> <span class="ident">get_ids</span>(
+            <span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="ident">ResultRow</span>,
+            <span class="ident">table_id</span>: <span class="ident">TableId</span>,
+            <span class="ident">table_ids</span>: <span class="kw-2">&amp;</span><span class="ident">IndexMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">TableId</span><span class="op">&gt;</span>,
+            <span class="ident">schema</span>: <span class="kw-2">&amp;</span><span class="ident">SqlSchema</span>,
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">ColumnId</span>, <span class="ident">TableId</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnId</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">column</span> <span class="op">=</span> <span class="ident">schema</span>.<span class="ident">walk</span>(<span class="ident">table_id</span>).<span class="ident">column</span>(<span class="kw-2">&amp;</span><span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;from&quot;</span>))<span class="question-mark">?</span>.<span class="ident">id</span>;
+            <span class="kw">let</span> <span class="ident">referenced_table</span> <span class="op">=</span> <span class="ident">schema</span>.<span class="ident">walk</span>(<span class="kw-2">*</span><span class="ident">table_ids</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;table&quot;</span>))<span class="question-mark">?</span>);
+            <span class="comment">// this can be null if the primary key and shortened fk syntax was used</span>
+            <span class="kw">let</span> <span class="ident">referenced_column</span> <span class="op">=</span> <span class="ident">row</span>
+                .<span class="ident">get_string</span>(<span class="string">&quot;to&quot;</span>)
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">colname</span><span class="op">|</span> <span class="prelude-val">Some</span>(<span class="ident">referenced_table</span>.<span class="ident">column</span>(<span class="kw-2">&amp;</span><span class="ident">colname</span>)<span class="question-mark">?</span>.<span class="ident">id</span>));
 
-                <span class="kw">let</span> <span class="ident">tpe</span> <span class="op">=</span> <span class="ident">get_column_type</span>(<span class="kw-2">&amp;</span><span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;type&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">expect</span>(<span class="string">&quot;type&quot;</span>), <span class="ident">arity</span>);
-
-                <span class="kw">let</span> <span class="ident">default</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;dflt_value&quot;</span>) {
-                    <span class="prelude-val">None</span> =&gt; <span class="prelude-val">None</span>,
-                    <span class="prelude-val">Some</span>(<span class="ident">val</span>) <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">is_null</span>() =&gt; <span class="prelude-val">None</span>,
-                    <span class="prelude-val">Some</span>(<span class="ident">Value::Text</span>(<span class="prelude-val">Some</span>(<span class="ident">cow_string</span>))) =&gt; {
-                        <span class="kw">let</span> <span class="ident">default_string</span> <span class="op">=</span> <span class="ident">cow_string</span>.<span class="ident">to_string</span>();
-
-                        <span class="kw">if</span> <span class="ident">default_string</span>.<span class="ident">to_lowercase</span>() <span class="op">==</span> <span class="string">&quot;null&quot;</span> {
-                            <span class="prelude-val">None</span>
-                        } <span class="kw">else</span> {
-                            <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">tpe</span>.<span class="ident">family</span> {
-                                <span class="ident">ColumnTypeFamily::Int</span> =&gt; <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::parse_int</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
-                                    <span class="prelude-val">Some</span>(<span class="ident">int_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">int_value</span>),
-                                    <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                },
-                                <span class="ident">ColumnTypeFamily::BigInt</span> =&gt; <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::parse_big_int</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
-                                    <span class="prelude-val">Some</span>(<span class="ident">int_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">int_value</span>),
-                                    <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                },
-                                <span class="ident">ColumnTypeFamily::Float</span> =&gt; <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::parse_float</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
-                                    <span class="prelude-val">Some</span>(<span class="ident">float_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">float_value</span>),
-                                    <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                },
-                                <span class="ident">ColumnTypeFamily::Decimal</span> =&gt; <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::parse_float</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
-                                    <span class="prelude-val">Some</span>(<span class="ident">float_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">float_value</span>),
-                                    <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                },
-                                <span class="ident">ColumnTypeFamily::Boolean</span> =&gt; <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::parse_int</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
-                                    <span class="prelude-val">Some</span>(<span class="ident">PrismaValue::Int</span>(<span class="number">1</span>)) =&gt; <span class="ident">DefaultValue::value</span>(<span class="bool-val">true</span>),
-                                    <span class="prelude-val">Some</span>(<span class="ident">PrismaValue::Int</span>(<span class="number">0</span>)) =&gt; <span class="ident">DefaultValue::value</span>(<span class="bool-val">false</span>),
-                                    <span class="kw">_</span> =&gt; <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::parse_bool</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
-                                        <span class="prelude-val">Some</span>(<span class="ident">bool_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">bool_value</span>),
-                                        <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                    },
-                                },
-                                <span class="ident">ColumnTypeFamily::String</span> =&gt; {
-                                    <span class="ident">DefaultValue::value</span>(<span class="ident">unquote_sqlite_string_default</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>).<span class="ident">into_owned</span>())
-                                }
-                                <span class="ident">ColumnTypeFamily::DateTime</span> =&gt; <span class="kw">match</span> <span class="ident">default_string</span>.<span class="ident">to_lowercase</span>().<span class="ident">as_str</span>() {
-                                    <span class="string">&quot;current_timestamp&quot;</span> <span class="op">|</span> <span class="string">&quot;datetime(\&#39;now\&#39;)&quot;</span> <span class="op">|</span> <span class="string">&quot;datetime(\&#39;now\&#39;, \&#39;localtime\&#39;)&quot;</span> =&gt; {
-                                        <span class="ident">DefaultValue::now</span>()
-                                    }
-                                    <span class="kw">_</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                },
-                                <span class="ident">ColumnTypeFamily::Binary</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                <span class="ident">ColumnTypeFamily::Json</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                <span class="ident">ColumnTypeFamily::Uuid</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                                <span class="ident">ColumnTypeFamily::Enum</span>(<span class="kw">_</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">PrismaValue::Enum</span>(<span class="ident">default_string</span>)),
-                                <span class="ident">ColumnTypeFamily::Unsupported</span>(<span class="kw">_</span>) =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
-                            })
-                        }
-                    }
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-                };
-
-                <span class="kw">let</span> <span class="ident">pk_col</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;pk&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_integer</span>()).<span class="ident">expect</span>(<span class="string">&quot;primary key&quot;</span>);
-
-                <span class="kw">let</span> <span class="ident">col</span> <span class="op">=</span> <span class="ident">Column</span> {
-                    <span class="ident">name</span>: <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">expect</span>(<span class="string">&quot;name&quot;</span>),
-                    <span class="ident">tpe</span>,
-                    <span class="ident">default</span>,
-                    <span class="ident">auto_increment</span>: <span class="bool-val">false</span>,
-                };
-
-                <span class="kw">if</span> <span class="ident">pk_col</span> <span class="op">&gt;</span> <span class="number">0</span> {
-                    <span class="ident">pk_cols</span>.<span class="ident">insert</span>(<span class="ident">pk_col</span>, <span class="ident">col</span>.<span class="ident">name</span>.<span class="ident">clone</span>());
-                }
-
-                <span class="macro">trace!</span>(
-                    <span class="string">&quot;Found column &#39;{}&#39;, type: &#39;{:?}&#39;, default: {:?}, primary key: {}&quot;</span>,
-                    <span class="ident">col</span>.<span class="ident">name</span>,
-                    <span class="ident">col</span>.<span class="ident">tpe</span>,
-                    <span class="ident">col</span>.<span class="ident">default</span>,
-                    <span class="ident">pk_col</span> <span class="op">&gt;</span> <span class="number">0</span>
-                );
-
-                <span class="ident">col</span>
-            })
-            .<span class="ident">collect</span>();
-
-        <span class="kw">let</span> <span class="ident">primary_key</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">pk_cols</span>.<span class="ident">is_empty</span>() {
-            <span class="macro">trace!</span>(<span class="string">&quot;Determined that table has no primary key&quot;</span>);
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">columns</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PrimaryKeyColumn</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">col_idxs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">pk_cols</span>.<span class="ident">keys</span>().<span class="ident">collect</span>();
-
-            <span class="ident">col_idxs</span>.<span class="ident">sort_unstable</span>();
-
-            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">col_idxs</span> {
-                <span class="ident">columns</span>.<span class="ident">push</span>(<span class="ident">PrimaryKeyColumn::new</span>(<span class="ident">pk_cols</span>[<span class="ident">i</span>].<span class="ident">clone</span>()));
-            }
-
-            <span class="comment">//Integer Id columns are always implemented with either row id or autoincrement</span>
-            <span class="kw">if</span> <span class="ident">pk_cols</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
-                <span class="kw">let</span> <span class="ident">pk_col</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">columns</span>[<span class="number">0</span>];
-                <span class="kw">for</span> <span class="ident">col</span> <span class="kw">in</span> <span class="ident">cols</span>.<span class="ident">iter_mut</span>() {
-                    <span class="kw">if</span> <span class="ident">col</span>.<span class="ident">name</span> <span class="op">==</span> <span class="ident">pk_col</span>.<span class="ident">name</span>() <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">col</span>.<span class="ident">tpe</span>.<span class="ident">full_data_type</span>.<span class="ident">to_lowercase</span>() <span class="op">==</span> <span class="string">&quot;integer&quot;</span> {
-                        <span class="macro">trace!</span>(
-                            <span class="string">&quot;Detected that the primary key column corresponds to rowid and \
-                                 is auto incrementing&quot;</span>
-                        );
-                        <span class="ident">col</span>.<span class="ident">auto_increment</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                        <span class="comment">// It is impossible to write a null value to an</span>
-                        <span class="comment">// autoincrementing primary key column.</span>
-                        <span class="ident">col</span>.<span class="ident">tpe</span>.<span class="ident">arity</span> <span class="op">=</span> <span class="ident">ColumnArity::Required</span>;
-                    }
-                }
-            }
-
-            <span class="macro">trace!</span>(<span class="string">&quot;Determined that table has primary key with columns {:?}&quot;</span>, <span class="ident">columns</span>);
-            <span class="prelude-val">Some</span>(<span class="ident">PrimaryKey</span> {
-                <span class="ident">columns</span>,
-                <span class="ident">constraint_name</span>: <span class="prelude-val">None</span>,
-            })
-        };
-
-        <span class="prelude-val">Ok</span>((<span class="ident">cols</span>, <span class="ident">primary_key</span>))
-    }
-
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_foreign_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ForeignKey</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">struct</span> <span class="ident">IntermediateForeignKey</span> {
-            <span class="kw">pub</span> <span class="ident">columns</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">String</span><span class="op">&gt;</span>,
-            <span class="kw">pub</span> <span class="ident">referenced_table</span>: <span class="ident">String</span>,
-            <span class="kw">pub</span> <span class="ident">referenced_columns</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">String</span><span class="op">&gt;</span>,
-            <span class="kw">pub</span> <span class="ident">on_delete_action</span>: <span class="ident">ForeignKeyAction</span>,
-            <span class="kw">pub</span> <span class="ident">on_update_action</span>: <span class="ident">ForeignKeyAction</span>,
+            <span class="prelude-val">Some</span>((<span class="ident">column</span>, <span class="ident">referenced_table</span>.<span class="ident">id</span>, <span class="ident">referenced_column</span>))
         }
 
-        <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA foreign_key_list(&quot;{}&quot;);&quot;#</span>, <span class="ident">table</span>);
-        <span class="macro">trace!</span>(<span class="string">&quot;describing table foreign keys, SQL: &#39;{}&#39;&quot;</span>, <span class="ident">sql</span>);
-        <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span>.<span class="ident">expect</span>(<span class="string">&quot;querying for foreign keys&quot;</span>);
+        <span class="kw">fn</span> <span class="ident">get_referential_actions</span>(<span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="ident">ResultRow</span>) -&gt; [<span class="ident">ForeignKeyAction</span>; <span class="number">2</span>] {
+            <span class="kw">let</span> <span class="ident">on_delete_action</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;on_delete&quot;</span>).<span class="ident">to_lowercase</span>().<span class="ident">as_str</span>() {
+                <span class="string">&quot;no action&quot;</span> =&gt; <span class="ident">ForeignKeyAction::NoAction</span>,
+                <span class="string">&quot;restrict&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Restrict</span>,
+                <span class="string">&quot;set null&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetNull</span>,
+                <span class="string">&quot;set default&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetDefault</span>,
+                <span class="string">&quot;cascade&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Cascade</span>,
+                <span class="ident">s</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unrecognized on delete action &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
+            };
+            <span class="kw">let</span> <span class="ident">on_update_action</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;on_update&quot;</span>).<span class="ident">to_lowercase</span>().<span class="ident">as_str</span>() {
+                <span class="string">&quot;no action&quot;</span> =&gt; <span class="ident">ForeignKeyAction::NoAction</span>,
+                <span class="string">&quot;restrict&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Restrict</span>,
+                <span class="string">&quot;set null&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetNull</span>,
+                <span class="string">&quot;set default&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetDefault</span>,
+                <span class="string">&quot;cascade&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Cascade</span>,
+                <span class="ident">s</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unrecognized on update action &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
+            };
+            [<span class="ident">on_delete_action</span>, <span class="ident">on_update_action</span>]
+        }
 
-        <span class="comment">// Since one foreign key with multiple columns will be represented here as several</span>
-        <span class="comment">// rows with the same ID, we have to use an intermediate representation that gets</span>
-        <span class="comment">// translated into the real foreign keys in another pass</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">intermediate_fks</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">IntermediateForeignKey</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+        <span class="kw">fn</span> <span class="ident">flush_current_fk</span>(
+            <span class="ident">current_foreign_key</span>: <span class="kw-2">&amp;mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i64</span>, <span class="ident">ForeignKeyId</span>)<span class="op">&gt;</span>,
+            <span class="ident">current_columns</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">i64</span>, <span class="ident">ColumnId</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnId</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
+            <span class="ident">schema</span>: <span class="kw-2">&amp;mut</span> <span class="ident">SqlSchema</span>,
+        ) {
+            <span class="ident">current_columns</span>.<span class="ident">sort_by_key</span>(<span class="op">|</span>(<span class="ident">seq</span>, <span class="kw">_</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="kw-2">*</span><span class="ident">seq</span>);
+            <span class="kw">let</span> <span class="ident">fkid</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">id</span>)) <span class="op">=</span> <span class="ident">current_foreign_key</span> {
+                <span class="kw-2">*</span><span class="ident">id</span>
+            } <span class="kw">else</span> {
+                <span class="kw">return</span>;
+            };
+
+            <span class="comment">// SQLite allows foreign key definitions without specifying the referenced columns, it then</span>
+            <span class="comment">// assumes the pk is used.</span>
+            <span class="kw">if</span> <span class="ident">current_columns</span>[<span class="number">0</span>].<span class="number">2</span>.<span class="ident">is_none</span>() {
+                <span class="kw">let</span> <span class="ident">referenced_table_pk_columns</span> <span class="op">=</span> <span class="ident">schema</span>
+                    .<span class="ident">walk</span>(<span class="ident">fkid</span>)
+                    .<span class="ident">referenced_table</span>()
+                    .<span class="ident">primary_key_columns</span>()
+                    .<span class="ident">into_iter</span>()
+                    .<span class="ident">flatten</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">as_column</span>().<span class="ident">id</span>)
+                    .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+                <span class="kw">if</span> <span class="ident">referenced_table_pk_columns</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">current_columns</span>.<span class="ident">len</span>() {
+                    <span class="kw">for</span> (<span class="ident">col</span>, <span class="ident">referenced</span>) <span class="kw">in</span> <span class="ident">current_columns</span>.<span class="ident">drain</span>(..).<span class="ident">zip</span>(<span class="ident">referenced_table_pk_columns</span>) {
+                        <span class="ident">schema</span>.<span class="ident">push_foreign_key_column</span>(<span class="ident">fkid</span>, [<span class="ident">col</span>.<span class="number">1</span>, <span class="ident">referenced</span>]);
+                    }
+                }
+            } <span class="kw">else</span> {
+                <span class="kw">for</span> (<span class="kw">_</span>, <span class="ident">col</span>, <span class="ident">referenced</span>) <span class="kw">in</span> <span class="ident">current_columns</span>.<span class="ident">iter</span>() {
+                    <span class="ident">schema</span>.<span class="ident">push_foreign_key_column</span>(<span class="ident">fkid</span>, [<span class="kw-2">*</span><span class="ident">col</span>, <span class="ident">referenced</span>.<span class="ident">unwrap</span>()]);
+                }
+            }
+
+            <span class="kw-2">*</span><span class="ident">current_foreign_key</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+            <span class="ident">current_columns</span>.<span class="ident">clear</span>();
+        }
+
         <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">result_set</span>.<span class="ident">into_iter</span>() {
             <span class="macro">trace!</span>(<span class="string">&quot;got FK description row {:?}&quot;</span>, <span class="ident">row</span>);
             <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;id&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_integer</span>()).<span class="ident">expect</span>(<span class="string">&quot;id&quot;</span>);
             <span class="kw">let</span> <span class="ident">seq</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;seq&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_integer</span>()).<span class="ident">expect</span>(<span class="string">&quot;seq&quot;</span>);
-            <span class="kw">let</span> <span class="ident">column</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;from&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">expect</span>(<span class="string">&quot;from&quot;</span>);
-            <span class="comment">// this can be null if the primary key and shortened fk syntax was used</span>
-            <span class="kw">let</span> <span class="ident">referenced_column</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;to&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>());
-            <span class="kw">let</span> <span class="ident">referenced_table</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;table&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">expect</span>(<span class="string">&quot;table&quot;</span>);
-            <span class="kw">match</span> <span class="ident">intermediate_fks</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="ident">id</span>) {
-                <span class="prelude-val">Some</span>(<span class="ident">fk</span>) =&gt; {
-                    <span class="ident">fk</span>.<span class="ident">columns</span>.<span class="ident">insert</span>(<span class="ident">seq</span>, <span class="ident">column</span>);
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">column</span>) <span class="op">=</span> <span class="ident">referenced_column</span> {
-                        <span class="ident">fk</span>.<span class="ident">referenced_columns</span>.<span class="ident">insert</span>(<span class="ident">seq</span>, <span class="ident">column</span>);
-                    };
-                }
-                <span class="prelude-val">None</span> =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">columns</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
-                    <span class="ident">columns</span>.<span class="ident">insert</span>(<span class="ident">seq</span>, <span class="ident">column</span>);
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">referenced_columns</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
-
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">column</span>) <span class="op">=</span> <span class="ident">referenced_column</span> {
-                        <span class="ident">referenced_columns</span>.<span class="ident">insert</span>(<span class="ident">seq</span>, <span class="ident">column</span>);
-                    };
-                    <span class="kw">let</span> <span class="ident">on_delete_action</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>
-                        .<span class="ident">get</span>(<span class="string">&quot;on_delete&quot;</span>)
-                        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>())
-                        .<span class="ident">expect</span>(<span class="string">&quot;on_delete&quot;</span>)
-                        .<span class="ident">to_lowercase</span>()
-                        .<span class="ident">as_str</span>()
-                    {
-                        <span class="string">&quot;no action&quot;</span> =&gt; <span class="ident">ForeignKeyAction::NoAction</span>,
-                        <span class="string">&quot;restrict&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Restrict</span>,
-                        <span class="string">&quot;set null&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetNull</span>,
-                        <span class="string">&quot;set default&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetDefault</span>,
-                        <span class="string">&quot;cascade&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Cascade</span>,
-                        <span class="ident">s</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unrecognized on delete action &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
-                    };
-                    <span class="kw">let</span> <span class="ident">on_update_action</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>
-                        .<span class="ident">get</span>(<span class="string">&quot;on_update&quot;</span>)
-                        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>())
-                        .<span class="ident">expect</span>(<span class="string">&quot;on_update&quot;</span>)
-                        .<span class="ident">to_lowercase</span>()
-                        .<span class="ident">as_str</span>()
-                    {
-                        <span class="string">&quot;no action&quot;</span> =&gt; <span class="ident">ForeignKeyAction::NoAction</span>,
-                        <span class="string">&quot;restrict&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Restrict</span>,
-                        <span class="string">&quot;set null&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetNull</span>,
-                        <span class="string">&quot;set default&quot;</span> =&gt; <span class="ident">ForeignKeyAction::SetDefault</span>,
-                        <span class="string">&quot;cascade&quot;</span> =&gt; <span class="ident">ForeignKeyAction::Cascade</span>,
-                        <span class="ident">s</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unrecognized on update action &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
-                    };
-                    <span class="kw">let</span> <span class="ident">fk</span> <span class="op">=</span> <span class="ident">IntermediateForeignKey</span> {
-                        <span class="ident">columns</span>,
-                        <span class="ident">referenced_table</span>,
-                        <span class="ident">referenced_columns</span>,
-                        <span class="ident">on_delete_action</span>,
-                        <span class="ident">on_update_action</span>,
-                    };
-                    <span class="ident">intermediate_fks</span>.<span class="ident">insert</span>(<span class="ident">id</span>, <span class="ident">fk</span>);
-                }
-            };
-        }
-
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fks</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ForeignKey</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">intermediate_fks</span>
-            .<span class="ident">values</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">intermediate_fk</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">column_keys</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">intermediate_fk</span>.<span class="ident">columns</span>.<span class="ident">keys</span>().<span class="ident">collect</span>();
-                <span class="ident">column_keys</span>.<span class="ident">sort</span>();
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">columns</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-                <span class="ident">columns</span>.<span class="ident">reserve</span>(<span class="ident">column_keys</span>.<span class="ident">len</span>());
-                <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">column_keys</span> {
-                    <span class="ident">columns</span>.<span class="ident">push</span>(<span class="ident">intermediate_fk</span>.<span class="ident">columns</span>[<span class="ident">i</span>].<span class="ident">to_owned</span>());
-                }
-
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">referenced_column_keys</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">intermediate_fk</span>.<span class="ident">referenced_columns</span>.<span class="ident">keys</span>().<span class="ident">collect</span>();
-                <span class="ident">referenced_column_keys</span>.<span class="ident">sort</span>();
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">referenced_columns</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-                <span class="ident">referenced_columns</span>.<span class="ident">reserve</span>(<span class="ident">referenced_column_keys</span>.<span class="ident">len</span>());
-                <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">referenced_column_keys</span> {
-                    <span class="ident">referenced_columns</span>.<span class="ident">push</span>(<span class="ident">intermediate_fk</span>.<span class="ident">referenced_columns</span>[<span class="ident">i</span>].<span class="ident">to_owned</span>());
-                }
-
-                <span class="kw">let</span> <span class="ident">fk</span> <span class="op">=</span> <span class="ident">ForeignKey</span> {
-                    <span class="ident">columns</span>,
-                    <span class="ident">referenced_table</span>: <span class="ident">intermediate_fk</span>.<span class="ident">referenced_table</span>.<span class="ident">to_owned</span>(),
-                    <span class="ident">referenced_columns</span>,
-                    <span class="ident">on_delete_action</span>: <span class="ident">intermediate_fk</span>.<span class="ident">on_delete_action</span>.<span class="ident">to_owned</span>(),
-                    <span class="ident">on_update_action</span>: <span class="ident">intermediate_fk</span>.<span class="ident">on_update_action</span>.<span class="ident">to_owned</span>(),
-
-                    <span class="comment">// Not relevant in SQLite since we cannot ALTER or DROP foreign keys by</span>
-                    <span class="comment">// constraint name.</span>
-                    <span class="ident">constraint_name</span>: <span class="prelude-val">None</span>,
+            <span class="kw">let</span> (<span class="ident">column_id</span>, <span class="ident">referenced_table_id</span>, <span class="ident">referenced_column_id</span>) <span class="op">=</span>
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ids</span>) <span class="op">=</span> <span class="ident">get_ids</span>(<span class="kw-2">&amp;</span><span class="ident">row</span>, <span class="ident">table_id</span>, <span class="ident">table_ids</span>, <span class="ident">schema</span>) {
+                    <span class="ident">ids</span>
+                } <span class="kw">else</span> {
+                    <span class="kw">continue</span>;
                 };
 
-                <span class="macro">trace!</span>(<span class="string">&quot;Detected foreign key {:?}&quot;</span>, <span class="ident">fk</span>);
+            <span class="kw">match</span> <span class="kw-2">&amp;mut</span> <span class="ident">current_foreign_key</span> {
+                <span class="prelude-val">None</span> =&gt; {
+                    <span class="kw">let</span> <span class="ident">foreign_key_id</span> <span class="op">=</span>
+                        <span class="ident">schema</span>.<span class="ident">push_foreign_key</span>(<span class="prelude-val">None</span>, [<span class="ident">table_id</span>, <span class="ident">referenced_table_id</span>], <span class="ident">get_referential_actions</span>(<span class="kw-2">&amp;</span><span class="ident">row</span>));
+                    <span class="ident">current_foreign_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>((<span class="ident">id</span>, <span class="ident">foreign_key_id</span>));
+                }
+                <span class="prelude-val">Some</span>((<span class="ident">sqlite_id</span>, <span class="kw">_</span>)) <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">sqlite_id</span> <span class="op">==</span> <span class="ident">id</span> =&gt; {}
+                <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="comment">// Flush current foreign key.</span>
+                    <span class="ident">flush_current_fk</span>(<span class="kw-2">&amp;mut</span> <span class="ident">current_foreign_key</span>, <span class="kw-2">&amp;mut</span> <span class="ident">current_foreign_key_columns</span>, <span class="ident">schema</span>);
 
-                <span class="ident">fk</span>
-            })
-            .<span class="ident">collect</span>();
-
-        <span class="ident">fks</span>.<span class="ident">sort_unstable_by_key</span>(<span class="op">|</span><span class="ident">fk</span><span class="op">|</span> <span class="ident">fk</span>.<span class="ident">columns</span>.<span class="ident">clone</span>());
-
-        <span class="prelude-val">Ok</span>(<span class="ident">fks</span>)
-    }
-
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Index</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA index_list(&quot;{}&quot;);&quot;#</span>, <span class="ident">table</span>);
-        <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="macro">trace!</span>(<span class="string">&quot;Got indices description results: {:?}&quot;</span>, <span class="ident">result_set</span>);
-
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">indices</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">let</span> <span class="ident">filtered_rows</span> <span class="op">=</span> <span class="ident">result_set</span>
-            .<span class="ident">into_iter</span>()
-            <span class="comment">// Exclude primary keys, they are inferred separately.</span>
-            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;origin&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">origin</span><span class="op">|</span> <span class="ident">origin</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>() <span class="op">!</span><span class="op">=</span> <span class="string">&quot;pk&quot;</span>)
-            <span class="comment">// Exclude partial indices</span>
-            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> <span class="op">!</span><span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;partial&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">partial</span><span class="op">|</span> <span class="ident">partial</span>.<span class="ident">as_bool</span>()).<span class="ident">unwrap</span>());
-
-        <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">filtered_rows</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">valid_index</span> <span class="op">=</span> <span class="bool-val">true</span>;
-
-            <span class="kw">let</span> <span class="ident">is_unique</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;unique&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_bool</span>()).<span class="ident">expect</span>(<span class="string">&quot;get unique&quot;</span>);
-            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">expect</span>(<span class="string">&quot;get name&quot;</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">Index</span> {
-                <span class="ident">name</span>: <span class="ident">name</span>.<span class="ident">clone</span>(),
-                <span class="ident">tpe</span>: <span class="kw">match</span> <span class="ident">is_unique</span> {
-                    <span class="bool-val">true</span> =&gt; <span class="ident">IndexType::Unique</span>,
-                    <span class="bool-val">false</span> =&gt; <span class="ident">IndexType::Normal</span>,
-                },
-                <span class="ident">columns</span>: <span class="macro">vec!</span>[],
-            };
-
-            <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA index_info(&quot;{}&quot;);&quot;#</span>, <span class="ident">name</span>);
-            <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span>.<span class="ident">expect</span>(<span class="string">&quot;querying for index info&quot;</span>);
-            <span class="macro">trace!</span>(<span class="string">&quot;Got index description results: {:?}&quot;</span>, <span class="ident">result_set</span>);
-
-            <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">result_set</span>.<span class="ident">into_iter</span>() {
-                <span class="comment">//if the index is on a rowid or expression, the name of the column will be null, we ignore these for now</span>
-                <span class="kw">match</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()) {
-                    <span class="prelude-val">Some</span>(<span class="ident">name</span>) =&gt; {
-                        <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;seqno&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_integer</span>()).<span class="ident">expect</span>(<span class="string">&quot;get seqno&quot;</span>) <span class="kw">as</span> <span class="ident">usize</span>;
-                        <span class="kw">if</span> <span class="ident">index</span>.<span class="ident">columns</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">pos</span> {
-                            <span class="ident">index</span>.<span class="ident">columns</span>.<span class="ident">resize</span>(<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">IndexColumn::default</span>());
-                        }
-                        <span class="ident">index</span>.<span class="ident">columns</span>[<span class="ident">pos</span>] <span class="op">=</span> <span class="ident">IndexColumn::new</span>(<span class="ident">name</span>);
-                    }
-                    <span class="prelude-val">None</span> =&gt; <span class="ident">valid_index</span> <span class="op">=</span> <span class="bool-val">false</span>,
+                    <span class="kw">let</span> <span class="ident">foreign_key_id</span> <span class="op">=</span>
+                        <span class="ident">schema</span>.<span class="ident">push_foreign_key</span>(<span class="prelude-val">None</span>, [<span class="ident">table_id</span>, <span class="ident">referenced_table_id</span>], <span class="ident">get_referential_actions</span>(<span class="kw-2">&amp;</span><span class="ident">row</span>));
+                    <span class="ident">current_foreign_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>((<span class="ident">id</span>, <span class="ident">foreign_key_id</span>));
                 }
             }
 
-            <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA index_xinfo(&quot;{}&quot;);&quot;#</span>, <span class="ident">name</span>);
-            <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span>.<span class="ident">expect</span>(<span class="string">&quot;querying for index info&quot;</span>);
-            <span class="macro">trace!</span>(<span class="string">&quot;Got index description results: {:?}&quot;</span>, <span class="ident">result_set</span>);
-
-            <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">result_set</span>.<span class="ident">into_iter</span>() {
-                <span class="comment">//if the index is on a rowid or expression, the name of the column will be null, we ignore these for now</span>
-                <span class="kw">if</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">is_some</span>() {
-                    <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;seqno&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_integer</span>()).<span class="ident">expect</span>(<span class="string">&quot;get seqno&quot;</span>) <span class="kw">as</span> <span class="ident">usize</span>;
-
-                    <span class="kw">let</span> <span class="ident">sort_order</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;desc&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">as_integer</span>()).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">v</span> {
-                        <span class="number">0</span> =&gt; <span class="ident">SQLSortOrder::Asc</span>,
-                        <span class="kw">_</span> =&gt; <span class="ident">SQLSortOrder::Desc</span>,
-                    });
-
-                    <span class="ident">index</span>.<span class="ident">columns</span>[<span class="ident">pos</span>].<span class="ident">sort_order</span> <span class="op">=</span> <span class="ident">sort_order</span>;
-                }
-            }
-
-            <span class="kw">if</span> <span class="ident">valid_index</span> {
-                <span class="ident">indices</span>.<span class="ident">push</span>(<span class="ident">index</span>)
-            }
+            <span class="ident">current_foreign_key_columns</span>.<span class="ident">push</span>((<span class="ident">seq</span>, <span class="ident">column_id</span>, <span class="ident">referenced_column_id</span>));
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">indices</span>)
+        <span class="comment">// Flush the last foreign key.</span>
+        <span class="ident">flush_current_fk</span>(<span class="kw-2">&amp;mut</span> <span class="ident">current_foreign_key</span>, <span class="kw-2">&amp;mut</span> <span class="ident">current_foreign_key_columns</span>, <span class="ident">schema</span>);
+
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">fn</span> <span class="ident">get_column_type</span>(<span class="ident">tpe</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">arity</span>: <span class="ident">ColumnArity</span>) -&gt; <span class="ident">ColumnType</span> {
-    <span class="kw">let</span> <span class="ident">tpe_lower</span> <span class="op">=</span> <span class="ident">tpe</span>.<span class="ident">to_lowercase</span>();
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">push_columns</span>(
+    <span class="ident">table_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="ident">table_id</span>: <span class="ident">TableId</span>,
+    <span class="ident">schema</span>: <span class="kw-2">&amp;mut</span> <span class="ident">SqlSchema</span>,
+    <span class="ident">conn</span>: <span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">Connection</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>),
+) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA table_info (&quot;{}&quot;)&quot;#</span>, <span class="ident">table_name</span>);
+    <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pk_cols</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">ColumnId</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+    <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">result_set</span> {
+        <span class="macro">trace!</span>(<span class="string">&quot;Got column row {:?}&quot;</span>, <span class="ident">row</span>);
+        <span class="kw">let</span> <span class="ident">is_required</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;notnull&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_bool</span>()).<span class="ident">expect</span>(<span class="string">&quot;notnull&quot;</span>);
 
-    <span class="kw">let</span> <span class="ident">family</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">tpe_lower</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">let</span> <span class="ident">arity</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">is_required</span> {
+            <span class="ident">ColumnArity::Required</span>
+        } <span class="kw">else</span> {
+            <span class="ident">ColumnArity::Nullable</span>
+        };
+
+        <span class="kw">let</span> <span class="ident">tpe</span> <span class="op">=</span> <span class="ident">get_column_type</span>(<span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;type&quot;</span>), <span class="ident">arity</span>);
+
+        <span class="kw">let</span> <span class="ident">default</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;dflt_value&quot;</span>) {
+            <span class="prelude-val">None</span> =&gt; <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">val</span>) <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">is_null</span>() =&gt; <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">Value::Text</span>(<span class="prelude-val">Some</span>(<span class="ident">cow_string</span>))) =&gt; {
+                <span class="kw">let</span> <span class="ident">default_string</span> <span class="op">=</span> <span class="ident">cow_string</span>.<span class="ident">to_string</span>();
+
+                <span class="kw">if</span> <span class="ident">default_string</span>.<span class="ident">to_lowercase</span>() <span class="op">==</span> <span class="string">&quot;null&quot;</span> {
+                    <span class="prelude-val">None</span>
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">tpe</span>.<span class="ident">family</span> {
+                        <span class="ident">ColumnTypeFamily::Int</span> =&gt; <span class="kw">match</span> <span class="ident">SqlSchemaDescriber::parse_int</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
+                            <span class="prelude-val">Some</span>(<span class="ident">int_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">int_value</span>),
+                            <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        },
+                        <span class="ident">ColumnTypeFamily::BigInt</span> =&gt; <span class="kw">match</span> <span class="ident">SqlSchemaDescriber::parse_big_int</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
+                            <span class="prelude-val">Some</span>(<span class="ident">int_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">int_value</span>),
+                            <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        },
+                        <span class="ident">ColumnTypeFamily::Float</span> =&gt; <span class="kw">match</span> <span class="ident">SqlSchemaDescriber::parse_float</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
+                            <span class="prelude-val">Some</span>(<span class="ident">float_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">float_value</span>),
+                            <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        },
+                        <span class="ident">ColumnTypeFamily::Decimal</span> =&gt; <span class="kw">match</span> <span class="ident">SqlSchemaDescriber::parse_float</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
+                            <span class="prelude-val">Some</span>(<span class="ident">float_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">float_value</span>),
+                            <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        },
+                        <span class="ident">ColumnTypeFamily::Boolean</span> =&gt; <span class="kw">match</span> <span class="ident">SqlSchemaDescriber::parse_int</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
+                            <span class="prelude-val">Some</span>(<span class="ident">PrismaValue::Int</span>(<span class="number">1</span>)) =&gt; <span class="ident">DefaultValue::value</span>(<span class="bool-val">true</span>),
+                            <span class="prelude-val">Some</span>(<span class="ident">PrismaValue::Int</span>(<span class="number">0</span>)) =&gt; <span class="ident">DefaultValue::value</span>(<span class="bool-val">false</span>),
+                            <span class="kw">_</span> =&gt; <span class="kw">match</span> <span class="ident">SqlSchemaDescriber::parse_bool</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>) {
+                                <span class="prelude-val">Some</span>(<span class="ident">bool_value</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">bool_value</span>),
+                                <span class="prelude-val">None</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                            },
+                        },
+                        <span class="ident">ColumnTypeFamily::String</span> =&gt; {
+                            <span class="ident">DefaultValue::value</span>(<span class="ident">unquote_sqlite_string_default</span>(<span class="kw-2">&amp;</span><span class="ident">default_string</span>).<span class="ident">into_owned</span>())
+                        }
+                        <span class="ident">ColumnTypeFamily::DateTime</span> =&gt; <span class="kw">match</span> <span class="ident">default_string</span>.<span class="ident">to_lowercase</span>().<span class="ident">as_str</span>() {
+                            <span class="string">&quot;current_timestamp&quot;</span> <span class="op">|</span> <span class="string">&quot;datetime(\&#39;now\&#39;)&quot;</span> <span class="op">|</span> <span class="string">&quot;datetime(\&#39;now\&#39;, \&#39;localtime\&#39;)&quot;</span> =&gt; {
+                                <span class="ident">DefaultValue::now</span>()
+                            }
+                            <span class="kw">_</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        },
+                        <span class="ident">ColumnTypeFamily::Binary</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        <span class="ident">ColumnTypeFamily::Json</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        <span class="ident">ColumnTypeFamily::Uuid</span> =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                        <span class="ident">ColumnTypeFamily::Enum</span>(<span class="kw">_</span>) =&gt; <span class="ident">DefaultValue::value</span>(<span class="ident">PrismaValue::Enum</span>(<span class="ident">default_string</span>)),
+                        <span class="ident">ColumnTypeFamily::Unsupported</span>(<span class="kw">_</span>) =&gt; <span class="ident">DefaultValue::db_generated</span>(<span class="ident">default_string</span>),
+                    })
+                }
+            }
+            <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+        };
+
+        <span class="kw">let</span> <span class="ident">pk_col</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;pk&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">as_integer</span>()).<span class="ident">expect</span>(<span class="string">&quot;primary key&quot;</span>);
+
+        <span class="kw">let</span> <span class="ident">column_id</span> <span class="op">=</span> <span class="ident">schema</span>.<span class="ident">push_column</span>(
+            <span class="ident">table_id</span>,
+            <span class="ident">Column</span> {
+                <span class="ident">name</span>: <span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;name&quot;</span>),
+                <span class="ident">tpe</span>,
+                <span class="ident">default</span>,
+                <span class="ident">auto_increment</span>: <span class="bool-val">false</span>,
+            },
+        );
+
+        <span class="kw">if</span> <span class="ident">pk_col</span> <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="ident">pk_cols</span>.<span class="ident">insert</span>(<span class="ident">pk_col</span>, <span class="ident">column_id</span>);
+        }
+    }
+
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">pk_cols</span>.<span class="ident">is_empty</span>() {
+        <span class="kw">let</span> <span class="ident">pk_id</span> <span class="op">=</span> <span class="ident">schema</span>.<span class="ident">push_primary_key</span>(<span class="ident">table_id</span>, <span class="ident">String::new</span>());
+        <span class="kw">for</span> <span class="ident">column_id</span> <span class="kw">in</span> <span class="ident">pk_cols</span>.<span class="ident">values</span>() {
+            <span class="ident">schema</span>.<span class="ident">push_index_column</span>(<span class="ident"><span class="kw">crate</span>::IndexColumn</span> {
+                <span class="ident">index_id</span>: <span class="ident">pk_id</span>,
+                <span class="ident">column_id</span>: <span class="kw-2">*</span><span class="ident">column_id</span>,
+                <span class="ident">sort_order</span>: <span class="prelude-val">None</span>,
+                <span class="ident">length</span>: <span class="prelude-val">None</span>,
+            });
+        }
+
+        <span class="comment">// Integer ID columns are always implemented with either row id or autoincrement</span>
+        <span class="kw">if</span> <span class="ident">pk_cols</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
+            <span class="kw">let</span> <span class="ident">pk_col_id</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">pk_cols</span>.<span class="ident">values</span>().<span class="ident">next</span>().<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">pk_col</span> <span class="op">=</span> <span class="kw-2">&amp;mut</span> <span class="ident">schema</span>.<span class="ident">columns</span>[<span class="ident">pk_col_id</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">usize</span>];
+            <span class="comment">// See https://www.sqlite.org/lang_createtable.html for the exact logic.</span>
+            <span class="kw">if</span> <span class="ident">pk_col</span>.<span class="number">1</span>.<span class="ident">tpe</span>.<span class="ident">full_data_type</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;INTEGER&quot;</span>) {
+                <span class="ident">pk_col</span>.<span class="number">1</span>.<span class="ident">auto_increment</span> <span class="op">=</span> <span class="bool-val">true</span>;
+                <span class="ident">pk_col</span>.<span class="number">1</span>.<span class="ident">tpe</span>.<span class="ident">arity</span> <span class="op">=</span> <span class="ident">ColumnArity::Required</span>;
+            }
+        }
+    }
+
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">push_indexes</span>(
+    <span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="ident">table_id</span>: <span class="ident">TableId</span>,
+    <span class="ident">schema</span>: <span class="kw-2">&amp;mut</span> <span class="ident">SqlSchema</span>,
+    <span class="ident">conn</span>: <span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">Connection</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>),
+) -&gt; <span class="ident">DescriberResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA index_list(&quot;{}&quot;);&quot;#</span>, <span class="ident">table</span>);
+    <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">indexes</span> <span class="op">=</span> <span class="ident">Vec::new</span>(); <span class="comment">// (index_name, is_unique, columns)</span>
+
+    <span class="kw">let</span> <span class="ident">filtered_rows</span> <span class="op">=</span> <span class="ident">result_set</span>
+        .<span class="ident">into_iter</span>()
+        <span class="comment">// Exclude primary keys, they are inferred separately.</span>
+        .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;origin&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">origin</span><span class="op">|</span> <span class="ident">origin</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>() <span class="op">!</span><span class="op">=</span> <span class="string">&quot;pk&quot;</span>)
+        <span class="comment">// Exclude partial indices</span>
+        .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> <span class="op">!</span><span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;partial&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">partial</span><span class="op">|</span> <span class="ident">partial</span>.<span class="ident">as_bool</span>()).<span class="ident">unwrap</span>());
+
+    <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">filtered_rows</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">valid_index</span> <span class="op">=</span> <span class="bool-val">true</span>;
+
+        <span class="kw">let</span> <span class="ident">is_unique</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get_expect_bool</span>(<span class="string">&quot;unique&quot;</span>);
+        <span class="kw">let</span> <span class="ident">index_name</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get_expect_string</span>(<span class="string">&quot;name&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">columns</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+
+        <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA index_info(&quot;{}&quot;);&quot;#</span>, <span class="ident">index_name</span>);
+        <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="macro">trace!</span>(<span class="string">&quot;Got index description results: {:?}&quot;</span>, <span class="ident">result_set</span>);
+
+        <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">result_set</span>.<span class="ident">into_iter</span>() {
+            <span class="comment">// if the index is on a rowid or expression, the name of the column will be null,</span>
+            <span class="comment">// we ignore these for now</span>
+            <span class="kw">match</span> <span class="ident">row</span>
+                .<span class="ident">get_string</span>(<span class="string">&quot;name&quot;</span>)
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">name</span><span class="op">|</span> <span class="ident">schema</span>.<span class="ident">walk</span>(<span class="ident">table_id</span>).<span class="ident">column</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>))
+            {
+                <span class="prelude-val">Some</span>(<span class="ident">col</span>) =&gt; {
+                    <span class="ident">columns</span>.<span class="ident">push</span>((<span class="ident">col</span>.<span class="ident">id</span>, <span class="ident">SQLSortOrder::Asc</span>));
+                }
+                <span class="prelude-val">None</span> =&gt; <span class="ident">valid_index</span> <span class="op">=</span> <span class="bool-val">false</span>,
+            }
+        }
+
+        <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">r#&quot;PRAGMA index_xinfo(&quot;{}&quot;);&quot;#</span>, <span class="ident">index_name</span>);
+        <span class="kw">let</span> <span class="ident">result_set</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">query_raw</span>(<span class="kw-2">&amp;</span><span class="ident">sql</span>, <span class="kw-2">&amp;</span>[]).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="macro">trace!</span>(<span class="string">&quot;Got index description results: {:?}&quot;</span>, <span class="ident">result_set</span>);
+
+        <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">result_set</span>.<span class="ident">into_iter</span>() {
+            <span class="comment">//if the index is on a rowid or expression, the name of the column will be null, we ignore these for now</span>
+            <span class="kw">if</span> <span class="ident">row</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">is_some</span>() {
+                <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">get_expect_i64</span>(<span class="string">&quot;seqno&quot;</span>);
+                <span class="kw">let</span> <span class="ident">sort_order</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">row</span>.<span class="ident">get_expect_i64</span>(<span class="string">&quot;desc&quot;</span>) {
+                    <span class="number">0</span> =&gt; <span class="ident">SQLSortOrder::Asc</span>,
+                    <span class="kw">_</span> =&gt; <span class="ident">SQLSortOrder::Desc</span>,
+                };
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">col</span>) <span class="op">=</span> <span class="ident">columns</span>.<span class="ident">get_mut</span>(<span class="ident">pos</span> <span class="kw">as</span> <span class="ident">usize</span>) {
+                    <span class="ident">col</span>.<span class="number">1</span> <span class="op">=</span> <span class="ident">sort_order</span>;
+                }
+            }
+        }
+
+        <span class="kw">if</span> <span class="ident">valid_index</span> {
+            <span class="ident">indexes</span>.<span class="ident">push</span>((<span class="ident">index_name</span>, <span class="ident">is_unique</span>, <span class="ident">columns</span>))
+        }
+    }
+
+    <span class="kw">for</span> (<span class="ident">index_name</span>, <span class="ident">unique</span>, <span class="ident">columns</span>) <span class="kw">in</span> <span class="ident">indexes</span> {
+        <span class="kw">let</span> <span class="ident">index_id</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">unique</span> {
+            <span class="ident">schema</span>.<span class="ident">push_unique_constraint</span>(<span class="ident">table_id</span>, <span class="ident">index_name</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">schema</span>.<span class="ident">push_index</span>(<span class="ident">table_id</span>, <span class="ident">index_name</span>)
+        };
+
+        <span class="kw">for</span> (<span class="ident">column_id</span>, <span class="ident">sort_order</span>) <span class="kw">in</span> <span class="ident">columns</span> {
+            <span class="ident">schema</span>.<span class="ident">push_index_column</span>(<span class="ident"><span class="kw">crate</span>::IndexColumn</span> {
+                <span class="ident">index_id</span>,
+                <span class="ident">column_id</span>,
+                <span class="ident">sort_order</span>: <span class="prelude-val">Some</span>(<span class="ident">sort_order</span>),
+                <span class="ident">length</span>: <span class="prelude-val">None</span>,
+            });
+        }
+    }
+
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="kw">fn</span> <span class="ident">get_column_type</span>(<span class="kw-2">mut</span> <span class="ident">tpe</span>: <span class="ident">String</span>, <span class="ident">arity</span>: <span class="ident">ColumnArity</span>) -&gt; <span class="ident">ColumnType</span> {
+    <span class="ident">tpe</span>.<span class="ident">make_ascii_lowercase</span>();
+    <span class="kw">let</span> <span class="ident">family</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">tpe</span>.<span class="ident">as_ref</span>() {
         <span class="comment">// SQLite only has a few native data types: https://www.sqlite.org/datatype3.html</span>
         <span class="comment">// It&#39;s tolerant though, and you can assign any data type you like to columns</span>
         <span class="string">&quot;int&quot;</span> =&gt; <span class="ident">ColumnTypeFamily::Int</span>,
@@ -1112,7 +1153,7 @@
         <span class="ident">data_type</span> =&gt; <span class="ident">ColumnTypeFamily::Unsupported</span>(<span class="ident">data_type</span>.<span class="ident">into</span>()),
     };
     <span class="ident">ColumnType</span> {
-        <span class="ident">full_data_type</span>: <span class="ident">tpe</span>.<span class="ident">to_string</span>(),
+        <span class="ident">full_data_type</span>: <span class="ident">tpe</span>,
         <span class="ident">family</span>,
         <span class="ident">arity</span>,
         <span class="ident">native_type</span>: <span class="prelude-val">None</span>,
@@ -1150,5 +1191,5 @@
     <span class="string">&quot;sqlite_stat4&quot;</span>,
 ];
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="sql_schema_describer" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="sql_schema_describer" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

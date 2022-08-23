@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/parser-database/src/context.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../parser_database/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/parser-database/src/context.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../parser_database/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../parser_database/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../parser_database/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../parser_database/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -438,14 +439,29 @@
 <span id="433">433</span>
 <span id="434">434</span>
 <span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
 </pre><pre class="rust"><code><span class="kw">mod</span> <span class="ident">attributes</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="self">self</span>::attributes::AttributesValidationState</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">ast</span>, <span class="ident">interner::StringInterner</span>, <span class="ident">names::Names</span>, <span class="ident">relations::Relations</span>, <span class="ident">types::Types</span>, <span class="ident">DatamodelError</span>, <span class="ident">Diagnostics</span>,
-    <span class="ident">StringId</span>, <span class="ident">ValueValidator</span>,
+    <span class="ident">StringId</span>,
 };
-<span class="kw">use</span> <span class="ident">schema_ast::ast::WithName</span>;
+<span class="kw">use</span> <span class="ident">schema_ast::ast</span>::{<span class="ident">Expression</span>, <span class="ident">WithName</span>};
 <span class="kw">use</span> <span class="ident">std::collections</span>::{<span class="ident">HashMap</span>, <span class="ident">HashSet</span>};
 
 <span class="doccomment">/// Validation context. This is an implementation detail of ParserDatabase. It</span>
@@ -670,7 +686,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">visit_default_arg_with_idx</span>(
         <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">ValueValidator</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span>), <span class="ident">DatamodelError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> <span class="ident">ast::Expression</span>), <span class="ident">DatamodelError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">name_s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interner</span>.<span class="ident">intern</span>(<span class="ident">name</span>);
         <span class="kw">match</span> (
             <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">args</span>.<span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">name_s</span>)),
@@ -678,7 +694,7 @@
         ) {
             (<span class="prelude-val">Some</span>(<span class="ident">arg_idx</span>), <span class="prelude-val">None</span>) <span class="op">|</span> (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="ident">arg_idx</span>)) =&gt; {
                 <span class="kw">let</span> <span class="ident">arg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arg_at</span>(<span class="ident">arg_idx</span>);
-                <span class="prelude-val">Ok</span>((<span class="ident">arg_idx</span>, <span class="ident">ValueValidator::new</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">value</span>)))
+                <span class="prelude-val">Ok</span>((<span class="ident">arg_idx</span>, <span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">value</span>))
             }
             (<span class="prelude-val">Some</span>(<span class="ident">arg_idx</span>), <span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; {
                 <span class="kw">let</span> <span class="ident">arg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arg_at</span>(<span class="ident">arg_idx</span>);
@@ -695,17 +711,15 @@
     <span class="doccomment">/// first unnamed argument.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Use this to implement unnamed argument behavior.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">visit_default_arg</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValueValidator</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span>, <span class="ident">DatamodelError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">visit_default_arg</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> <span class="ident">ast::Expression</span>, <span class="ident">DatamodelError</span><span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">visit_default_arg_with_idx</span>(<span class="ident">name</span>)<span class="question-mark">?</span>.<span class="number">1</span>)
     }
 
     <span class="doccomment">/// Visit an optional argument in the current attribute.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">visit_optional_arg</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ValueValidator</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">visit_optional_arg</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> <span class="ident">ast::Expression</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">arg_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interner</span>.<span class="ident">intern</span>(<span class="ident">name</span>);
         <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">args</span>.<span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">arg_name</span>))<span class="question-mark">?</span>;
-        <span class="prelude-val">Some</span>(<span class="ident">ValueValidator::new</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">current_attribute</span>().<span class="ident">arguments</span>.<span class="ident">arguments</span>[<span class="ident">idx</span>].<span class="ident">value</span>,
-        ))
+        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">current_attribute</span>().<span class="ident">arguments</span>.<span class="ident">arguments</span>[<span class="ident">idx</span>].<span class="ident">value</span>)
     }
 
     <span class="doccomment">/// This must be called at the end of arguments validation. It will report errors for each argument that was not used by the validators. The Drop impl will helpfully panic</span>
@@ -720,10 +734,7 @@
         <span class="kw">let</span> <span class="ident">diagnostics</span> <span class="op">=</span> <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">diagnostics</span>;
         <span class="kw">for</span> <span class="ident">arg_idx</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">args</span>.<span class="ident">values</span>() {
             <span class="kw">let</span> <span class="ident">arg</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">attr</span>.<span class="ident">arguments</span>.<span class="ident">arguments</span>[<span class="kw-2">*</span><span class="ident">arg_idx</span>];
-            <span class="ident">diagnostics</span>.<span class="ident">push_error</span>(<span class="ident">DatamodelError::new_unused_argument_error</span>(
-                <span class="ident">arg</span>.<span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span>.<span class="ident">name</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>),
-                <span class="ident">arg</span>.<span class="ident">span</span>,
-            ));
+            <span class="ident">diagnostics</span>.<span class="ident">push_error</span>(<span class="ident">DatamodelError::new_unused_argument_error</span>(<span class="ident">arg</span>.<span class="ident">span</span>));
         }
 
         <span class="self">self</span>.<span class="ident">discard_arguments</span>();
@@ -741,7 +752,7 @@
             <span class="kw">let</span> <span class="ident">attribute</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ast</span>[<span class="kw-2">*</span><span class="ident">attribute_id</span>];
             <span class="ident">diagnostics</span>.<span class="ident">push_error</span>(<span class="ident">DatamodelError::new_attribute_not_known_error</span>(
                 <span class="kw-2">&amp;</span><span class="ident">attribute</span>.<span class="ident">name</span>.<span class="ident">name</span>,
-                <span class="ident">attribute</span>.<span class="ident">name</span>.<span class="ident">span</span>,
+                <span class="ident">attribute</span>.<span class="ident">span</span>,
             ))
         }
         <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">attributes</span>.<span class="ident">clear</span>();
@@ -804,6 +815,28 @@
                     <span class="ident">is_reasonably_valid</span> <span class="op">=</span> <span class="bool-val">false</span>;
                 }
 
+                <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">args</span>.<span class="ident">arguments</span>.<span class="ident">iter</span>() {
+                    <span class="kw">let</span> <span class="ident">exprs</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">arg</span>.<span class="ident">value</span> {
+                        <span class="ident">Expression::Array</span>(<span class="kw-2">ref</span> <span class="ident">exprs</span>, <span class="kw">_</span>) =&gt; <span class="ident">exprs</span>,
+                        <span class="kw">_</span> =&gt; <span class="kw">continue</span>,
+                    };
+
+                    <span class="kw">for</span> <span class="ident">expr</span> <span class="kw">in</span> <span class="ident">exprs</span> {
+                        <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">expr</span> {
+                            <span class="ident">Expression::Function</span>(<span class="kw">_</span>, <span class="ident">args</span>, <span class="kw">_</span>) =&gt; <span class="ident">args</span>,
+                            <span class="kw">_</span> =&gt; <span class="kw">continue</span>,
+                        };
+
+                        <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">args</span>.<span class="ident">empty_arguments</span>.<span class="ident">iter</span>() {
+                            <span class="self">self</span>.<span class="ident">push_error</span>(<span class="ident">DatamodelError::new_attribute_validation_error</span>(
+                                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;The `{}` argument is missing a value.&quot;</span>, <span class="ident">arg</span>.<span class="ident">name</span>.<span class="ident">name</span>),
+                                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;@@{}&quot;</span>, <span class="ident">attribute</span>.<span class="ident">name</span>()),
+                                <span class="ident">arg</span>.<span class="ident">name</span>.<span class="ident">span</span>,
+                            ));
+                        }
+                    }
+                }
+
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">span</span>) <span class="op">=</span> <span class="ident">args</span>.<span class="ident">trailing_comma</span> {
                     <span class="self">self</span>.<span class="ident">push_error</span>(<span class="ident">DatamodelError::new_attribute_validation_error</span>(
                         <span class="string">&quot;Trailing commas are not valid in attribute arguments, please remove the comma.&quot;</span>,
@@ -830,12 +863,10 @@
                 <span class="kw">if</span> <span class="ident">arg</span>.<span class="ident">is_unnamed</span>() {
                     <span class="kw">if</span> <span class="ident">unnamed_arguments</span>.<span class="ident">is_empty</span>() {
                         <span class="kw">let</span> <span class="ident">existing_arg_value</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">attribute</span>.<span class="ident">arguments</span>.<span class="ident">arguments</span>[<span class="ident">existing_argument</span>].<span class="ident">value</span>;
-                        <span class="kw">let</span> <span class="ident">rendered</span> <span class="op">=</span> <span class="ident">schema_ast::renderer::Renderer::render_value_to_string</span>(<span class="ident">existing_arg_value</span>);
-                        <span class="ident">unnamed_arguments</span>.<span class="ident">push</span>(<span class="ident">rendered</span>)
+                        <span class="ident">unnamed_arguments</span>.<span class="ident">push</span>(<span class="ident">existing_arg_value</span>.<span class="ident">to_string</span>())
                     }
 
-                    <span class="kw">let</span> <span class="ident">rendered</span> <span class="op">=</span> <span class="ident">schema_ast::renderer::Renderer::render_value_to_string</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">value</span>);
-                    <span class="ident">unnamed_arguments</span>.<span class="ident">push</span>(<span class="ident">rendered</span>)
+                    <span class="ident">unnamed_arguments</span>.<span class="ident">push</span>(<span class="ident">arg</span>.<span class="ident">value</span>.<span class="ident">to_string</span>())
                 } <span class="kw">else</span> {
                     <span class="self">self</span>.<span class="ident">push_error</span>(<span class="ident">DatamodelError::new_duplicate_argument_error</span>(
                         <span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">name</span>,
@@ -874,5 +905,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="parser_database" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="parser_database" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

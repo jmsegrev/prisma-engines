@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/parser-database/src/walkers/model.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>model.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../parser_database/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `libs/datamodel/parser-database/src/walkers/model.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>model.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../parser_database/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../../parser_database/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../parser_database/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../parser_database/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -296,11 +297,50 @@
 <span id="291">291</span>
 <span id="292">292</span>
 <span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
 </pre><pre class="rust"><code><span class="kw">mod</span> <span class="ident">primary_key</span>;
 <span class="kw">mod</span> <span class="ident">unique_criteria</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">primary_key</span>::<span class="kw-2">*</span>;
+
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">unique_criteria</span>::<span class="kw-2">*</span>;
+
+<span class="kw">use</span> <span class="ident">schema_ast::ast</span>::{<span class="ident">IndentationType</span>, <span class="ident">NewlineType</span>, <span class="ident">WithSpan</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">CompleteInlineRelationWalker</span>, <span class="ident">IndexWalker</span>, <span class="ident">InlineRelationWalker</span>, <span class="ident">RelationFieldWalker</span>, <span class="ident">RelationWalker</span>,
@@ -342,7 +382,7 @@
     }
 
     <span class="doccomment">/// Whether MySQL would consider the field indexed for autoincrement purposes.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_is_indexed_for_autoincrement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field_id</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_is_indexed_for_autoincrement</span>(<span class="self">self</span>, <span class="ident">field_id</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">indexes</span>()
             .<span class="ident">any</span>(<span class="op">|</span><span class="ident">idx</span><span class="op">|</span> <span class="ident">idx</span>.<span class="ident">fields</span>().<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span>.<span class="ident">field_id</span>()) <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">field_id</span>))
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>
@@ -352,14 +392,14 @@
     }
 
     <span class="doccomment">/// Whether the field is the whole primary key. Will match `@id` and `@@id([fieldName])`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_is_single_pk</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_is_single_pk</span>(<span class="self">self</span>, <span class="ident">field</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">primary_key</span>()
             .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">pk</span><span class="op">|</span> <span class="ident">pk</span>.<span class="ident">fields</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span>.<span class="ident">field_id</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>() <span class="op">==</span> [<span class="ident">field</span>])
             .<span class="ident">is_some</span>()
     }
 
     <span class="doccomment">/// Is the field part of a compound primary key.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_is_part_of_a_compound_pk</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_is_part_of_a_compound_pk</span>(<span class="self">self</span>, <span class="ident">field</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">primary_key</span>()
             .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">pk</span><span class="op">|</span> {
                 <span class="kw">let</span> <span class="ident">exists</span> <span class="op">=</span> <span class="ident">pk</span>.<span class="ident">fields</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span>.<span class="ident">field_id</span>()).<span class="ident">any</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span> <span class="op">==</span> <span class="ident">field</span>);
@@ -395,7 +435,7 @@
         <span class="self">self</span>.<span class="ident">model_attributes</span>
             .<span class="ident">mapped_name</span>
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">db</span>[<span class="ident">id</span>])
-            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">db</span>.<span class="ident">ast</span>[<span class="self">self</span>.<span class="ident">model_id</span>].<span class="ident">name</span>.<span class="ident">name</span>)
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">db</span>.<span class="ident">ast</span>[<span class="self">self</span>.<span class="ident">model_id</span>].<span class="ident">name</span>())
     }
 
     <span class="doccomment">/// Get the database name of the scalar field.</span>
@@ -403,12 +443,12 @@
         <span class="self">self</span>.<span class="ident">db</span>.<span class="ident">types</span>.<span class="ident">scalar_fields</span>[<span class="kw-2">&amp;</span>(<span class="self">self</span>.<span class="ident">model_id</span>, <span class="ident">field_id</span>)]
             .<span class="ident">mapped_name</span>
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">db</span>[<span class="ident">id</span>])
-            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">db</span>.<span class="ident">ast</span>[<span class="self">self</span>.<span class="ident">model_id</span>][<span class="ident">field_id</span>].<span class="ident">name</span>.<span class="ident">name</span>)
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">db</span>.<span class="ident">ast</span>[<span class="self">self</span>.<span class="ident">model_id</span>][<span class="ident">field_id</span>].<span class="ident">name</span>())
     }
 
     <span class="doccomment">/// Get the database names of the constrained scalar fields.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::unnecessary_lazy_evaluations</span>)]</span> <span class="comment">// respectfully disagree</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_field_database_names</span>(<span class="self">self</span>, <span class="ident">fields</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> [<span class="ident">ast::FieldId</span>]) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;_</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_field_database_names</span>(<span class="self">self</span>, <span class="ident">fields</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> [<span class="ident">ast::FieldId</span>]) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="ident">fields</span>
             .<span class="ident">iter</span>()
             .<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">field_id</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">get_field_database_name</span>(<span class="ident">field_id</span>))
@@ -435,7 +475,7 @@
 
     <span class="doccomment">/// Walk a scalar field by id.</span>
     <span class="attribute">#[<span class="ident">track_caller</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">scalar_field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field_id</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">ScalarFieldWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">scalar_field</span>(<span class="self">self</span>, <span class="ident">field_id</span>: <span class="ident">ast::FieldId</span>) -&gt; <span class="ident">ScalarFieldWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span> {
         <span class="ident">ScalarFieldWalker</span> {
             <span class="ident">model_id</span>: <span class="self">self</span>.<span class="ident">model_id</span>,
             <span class="ident">field_id</span>,
@@ -445,7 +485,7 @@
     }
 
     <span class="doccomment">/// Iterate all the scalar fields in a given model in the order they were defined.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar_fields</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">ScalarFieldWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar_fields</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">ScalarFieldWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">db</span>;
         <span class="ident">db</span>.<span class="ident">types</span>
             .<span class="ident">scalar_fields</span>
@@ -460,7 +500,7 @@
 
     <span class="doccomment">/// All unique criterias of the model; consisting of the primary key and</span>
     <span class="doccomment">/// unique indexes, if set.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unique_criterias</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">UniqueCriteriaWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unique_criterias</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">UniqueCriteriaWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">model_id</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">model_id</span>;
         <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">db</span>;
 
@@ -486,10 +526,9 @@
         <span class="ident">from_pk</span>.<span class="ident">chain</span>(<span class="ident">from_indices</span>)
     }
 
-    <span class="doccomment">/// Iterate all the relation fields in the model in the order they were</span>
-    <span class="doccomment">/// defined. Note that these are only the fields that were actually written</span>
-    <span class="doccomment">/// in the schema.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">explicit_indexes</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">IndexWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="doccomment">/// Iterate all the indexes in the model in the order they were</span>
+    <span class="doccomment">/// defined.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indexes</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">IndexWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">model_id</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">model_id</span>;
         <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">db</span>;
 
@@ -498,31 +537,14 @@
             .<span class="ident">iter</span>()
             .<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span>(<span class="ident">index</span>, <span class="ident">index_attribute</span>)<span class="op">|</span> <span class="ident">IndexWalker</span> {
                 <span class="ident">model_id</span>,
-                <span class="ident">index</span>: <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">index</span>),
+                <span class="ident">index</span>: <span class="kw-2">*</span><span class="ident">index</span>,
                 <span class="ident">db</span>,
                 <span class="ident">index_attribute</span>,
             })
     }
 
-    <span class="doccomment">/// Iterate all the indexes in the model in the order they were</span>
-    <span class="doccomment">/// defined, followed by the implicit indexes.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indexes</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">IndexWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
-        <span class="kw">let</span> <span class="ident">implicit_indexes</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">model_attributes</span>
-            .<span class="ident">implicit_indexes</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">index_attribute</span><span class="op">|</span> <span class="ident">IndexWalker</span> {
-                <span class="ident">model_id</span>: <span class="self">self</span>.<span class="ident">model_id</span>(),
-                <span class="ident">index</span>: <span class="prelude-val">None</span>,
-                <span class="ident">db</span>: <span class="self">self</span>.<span class="ident">db</span>,
-                <span class="ident">index_attribute</span>,
-            });
-
-        <span class="self">self</span>.<span class="ident">explicit_indexes</span>().<span class="ident">chain</span>(<span class="ident">implicit_indexes</span>)
-    }
-
     <span class="doccomment">/// All (concrete) relation fields of the model.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relation_fields</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">RelationFieldWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relation_fields</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">RelationFieldWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">model_id</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">model_id</span>;
         <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">db</span>;
 
@@ -553,7 +575,7 @@
     }
 
     <span class="doccomment">/// All relations that start from this model.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations_from</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">RelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations_from</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">RelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">db</span>
             .<span class="ident">relations</span>
             .<span class="ident">from_model</span>(<span class="self">self</span>.<span class="ident">model_id</span>)
@@ -564,7 +586,7 @@
     }
 
     <span class="doccomment">/// All relations that reference this model.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations_to</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">RelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations_to</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">RelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">db</span>
             .<span class="ident">relations</span>
             .<span class="ident">to_model</span>(<span class="self">self</span>.<span class="ident">model_id</span>)
@@ -575,7 +597,7 @@
     }
 
     <span class="doccomment">/// 1:n and 1:1 relations that start from this model.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inline_relations_from</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">InlineRelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inline_relations_from</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">InlineRelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">relations_from</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">relation</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">relation</span>.<span class="ident">refine</span>() {
             <span class="ident"><span class="kw">super</span>::RefinedRelationWalker::Inline</span>(<span class="ident">relation</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">relation</span>),
             <span class="ident"><span class="kw">super</span>::RefinedRelationWalker::ImplicitManyToMany</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
@@ -584,11 +606,62 @@
     }
 
     <span class="doccomment">/// 1:n and 1:1 relations, starting from this model and having both sides defined.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">complete_inline_relations_from</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">CompleteInlineRelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;db</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">complete_inline_relations_from</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">CompleteInlineRelationWalker</span><span class="op">&lt;</span><span class="lifetime">&#39;db</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inline_relations_from</span>()
             .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">relation</span><span class="op">|</span> <span class="ident">relation</span>.<span class="ident">as_complete</span>())
     }
+
+    <span class="doccomment">/// How fields and arguments are indented in the model.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indentation</span>(<span class="self">self</span>) -&gt; <span class="ident">IndentationType</span> {
+        <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">scalar_fields</span>().<span class="ident">last</span>() {
+            <span class="prelude-val">Some</span>(<span class="ident">field</span>) =&gt; <span class="ident">field</span>,
+            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="ident">IndentationType::default</span>(),
+        };
+
+        <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">db</span>.<span class="ident">source</span>();
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ast_field</span>().<span class="ident">span</span>().<span class="ident">start</span>;
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">spaces</span> <span class="op">=</span> <span class="number">0</span>;
+
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="ident">start</span>).<span class="ident">rev</span>() {
+            <span class="kw">if</span> <span class="ident">src</span>.<span class="ident">is_char_boundary</span>(<span class="ident">i</span>) {
+                <span class="kw">match</span> <span class="ident">src</span>[<span class="ident">i</span>..].<span class="ident">chars</span>().<span class="ident">next</span>() {
+                    <span class="prelude-val">Some</span>(<span class="string">&#39;\t&#39;</span>) =&gt; <span class="kw">return</span> <span class="ident">IndentationType::Tabs</span>,
+                    <span class="prelude-val">Some</span>(<span class="string">&#39; &#39;</span>) =&gt; <span class="ident">spaces</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>,
+                    <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="ident">IndentationType::Spaces</span>(<span class="ident">spaces</span>),
+                }
+            }
+        }
+
+        <span class="ident">IndentationType::default</span>()
+    }
+
+    <span class="doccomment">/// What kind of newlines the model uses.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">newline</span>(<span class="self">self</span>) -&gt; <span class="ident">NewlineType</span> {
+        <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">scalar_fields</span>().<span class="ident">last</span>() {
+            <span class="prelude-val">Some</span>(<span class="ident">field</span>) =&gt; <span class="ident">field</span>,
+            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="ident">NewlineType::default</span>(),
+        };
+
+        <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">db</span>.<span class="ident">source</span>();
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ast_field</span>().<span class="ident">span</span>().<span class="ident">end</span> <span class="op">-</span> <span class="number">2</span>;
+
+        <span class="kw">match</span> <span class="ident">src</span>.<span class="ident">chars</span>().<span class="ident">nth</span>(<span class="ident">start</span>) {
+            <span class="prelude-val">Some</span>(<span class="string">&#39;\r&#39;</span>) =&gt; <span class="ident">NewlineType::Windows</span>,
+            <span class="kw">_</span> =&gt; <span class="ident">NewlineType::Unix</span>,
+        }
+    }
+
+    <span class="doccomment">/// The name of the schema the model belongs to.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```ignore</span>
+    <span class="doccomment">/// @@schema(&quot;public&quot;)</span>
+    <span class="doccomment">///          ^^^^^^^^</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">schema</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;db</span> <span class="ident">str</span>, <span class="ident">ast::Span</span>)<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">attributes</span>().<span class="ident">schema</span>.<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">id</span>, <span class="ident">span</span>)<span class="op">|</span> (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">db</span>[<span class="ident">id</span>], <span class="ident">span</span>))
+    }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="parser_database" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="parser_database" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

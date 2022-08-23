@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["MongoDbDatamodelConnector",""]]});
+window.SIDEBAR_ITEMS = {"constant":[["MONGODB",""]]};
